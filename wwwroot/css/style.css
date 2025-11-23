@@ -1,6 +1,6 @@
 .enlace-animado {
     position: relative;
-    color: #000;
+    color: #0c86c3;
     text-decoration: none;
     padding-bottom: 5px;
     display: inline-block;
@@ -13,7 +13,8 @@
     height: 2px;
     bottom: 0;
     left: 0;
-    background-color: #000;
+    color: #0c86c3;
+    background-color: #0c86c3;
     transform: scaleX(0);
     transform-origin: bottom right;
     transition: transform 0.3s ease-out;
@@ -29,5 +30,8 @@ th {
 }
 
 body {
-    background-color: #3ebaaf;
+    background: linear-gradient(to bottom, #00ae98 0%, #a3fafe 25%);
+    min-height: 100vh;
+    background-attachment: fixed;
+    margin: 0;
 }
