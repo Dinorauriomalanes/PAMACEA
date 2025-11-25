@@ -23,6 +23,31 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult Enfermedades()
+    {
+        return View();
+    }
+
+    public IActionResult Anatomia()
+    {
+        return View();
+    }
+
+    public IActionResult SaludMental()
+    {
+        return View();
+    }
+
+    public IActionResult Ayuda()
+    {
+        return View();
+    }
+
+    public IActionResult AcercaDe()
+    {
+        return View();
+    }
+
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

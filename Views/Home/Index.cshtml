@@ -2,13 +2,11 @@
     ViewData["Title"] = "Home Page";
 }
 
-<table>
-    <tr >
-        <th><span class="enlace-animado">Enfermedad de temporada</span></th>
-        <th><span class="enlace-animado">Anatomia de Niño</span></th>
-        <th><span class="enlace-animado">Salud Mental</span></th>
-        <th><span class="enlace-animado">Anatomia de Niña</span></th>
-        <th><span class="enlace-animado">¿Necesitas Ayuda?</span></th>
-        <th><span class="enlace-animado">Acerca de nosotros</span></th>
-    </tr>
-</table>
+<div class="carousel-container">
+    <div class="carousel-slide">
+        <img src="~/images2/en_trabajo.jpg" alt="Anuncio 1" data-link="https://google.com">
+        <img src="~/images2/temporada_invierno.jpg" alt="Anuncio 2" data-link="https://www.gob.mx/issste/articulos/medidas-preventivas-para-el-invierno?idiom=es">
+    </div>
+    <button id="prevBtn" class="carousel-btn prev-btn">&#10094;</button>
+    <button id="nextBtn" class="carousel-btn next-btn">&#10095;</button>
+</div>

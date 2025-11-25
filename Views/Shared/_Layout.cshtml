@@ -10,6 +10,22 @@
     <link rel="stylesheet" href="~/ProyectoPamacea.styles.css" asp-append-version="true" />
 </head>
 <body>
+    <header class="main-header">
+        <a asp-controller="Home" asp-action="Index" class="logo-container">
+            <img src="~/images/BotonIA.png" alt="Logo" class="site-logo">
+        </a>
+        <nav class="main-nav">
+            <table>
+                <tr >
+                    <th><a class="enlace-animado" asp-controller="Home" asp-action="Enfermedades">ENFERMEDADES DE TEMPORADA</a></th>
+                    <th><a class="enlace-animado" asp-controller="Home" asp-action="Anatomia">ANATOMIA HUMANA</a></th>
+                    <th><a class="enlace-animado" asp-controller="Home" asp-action="SaludMental">SALUD MENTAL</a></th>
+                    <th><a class="enlace-animado" asp-controller="Home" asp-action="Ayuda">¿NECESITAS AYUDA?</a></th>
+                    <th><a class="enlace-animado" asp-controller="Home" asp-action="AcercaDe">ACERCA DE NOSOTROS</a></th>
+                </tr>
+            </table>
+        </nav>
+    </header>
 
     <div class="container">
         <main role="main" class="pb-3">
