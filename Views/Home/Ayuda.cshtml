@@ -1,5 +1,169 @@
 @{
     ViewData["Title"] = "¿Necesitas Ayuda?";
 }
-<h1>@ViewData["Title"]</h1>
-<p>Contenido de Ayuda.</p>
+<div class="ayuda-container">
+    <p class="ayuda-intro">
+        SABEMOS QUE MUCHAS VECES NOS ENCONTRAMOS EN SITUACIONES QUE NOS SUPERAN PERO NO ESTAS SOLO, AQUI TIENES 
+        ALGUNOS NUMEROS Y LUGARES DONDE PODRAN BRINDARTE ASISTENCIA. ¿NECESITAS ALGUN CONSEJO O PALABRAS DE 
+        ALIENTO? NUESTRO ASISTENTE ESTARA ENCANTADO DE AYUDARTE
+    </p>
+
+    <div class="dropdown-section">
+        <label for="estado-select" class="dropdown-label">ELIGE TU CIUDAD</label>
+        <div class="custom-dropdown">
+            <button class="dropdown-button" id="dropdown-btn">
+                <span id="selected-estado">ALTAMIRA</span>
+                <span class="dropdown-arrow">▼</span>
+            </button>
+            <div class="dropdown-menu" id="dropdown-menu">
+                <div class="dropdown-item" data-estado="altamira">ALTAMIRA</div>
+                <div class="dropdown-item" data-estado="madero">MADERO</div>
+                <div class="dropdown-item" data-estado="tampico">TAMPICO</div>
+                <div class="dropdown-item" data-estado="mas-estados">¡TENDREMOS MAS CIUDADES PRONTO!</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <!-- Tamaulipas Content -->
+        <div class="estado-content active" id="content-altamira">
+            <h2>Recursos de Ayuda en Altamira</h2>
+            <div class="recursos-grid">
+                <div class="recurso-card">
+                    <h3>ATENCION CIUDADANA</h3>
+                    <p class="telefono">📞 800 633 33 33</p>
+                    <p>ATENCION INMEDIATA</p>
+                </div>
+                <div class="recurso-card">
+                    <h3>SISTEMA DE EMERGENCIAS</h3>
+                    <p class="telefono">📞 911</p>
+                    <p>TODO TIPO DE EMERGENCIAS</p>
+                </div>
+                <div class="recurso-card">
+                    <h3>CRUZ ROJA ALTAMIRA</h3>
+                    <p class="telefono">📞 833 264 06 95 </p>
+                    <p>Emergencias médicas</p>
+                </div>
+                <div class="recurso-card">
+                    <h3>CRUZ ROJA TAMPICO</h3>
+                    <p class="telefono">📞 833 212 13 33/ 833 227 37 43 </p>
+                    <p>Emergencias médicas</p>
+                </div>
+                <div class="recurso-card">
+                    <h3>CRUZ ROJA CD.MADERO</h3>
+                    <p class="telefono">📞 833 215 03 38</p>
+                    <p>Emergencias médicas</p>
+                </div>
+                <div class="recurso-card">
+                    <h3>CRUZ ROJAMATAMOROS</h3>
+                    <p class="telefono">📞 868 812 00 44</p>
+                    <p>Emergencias médicas</p>
+                </div>
+                <div class="recurso-card">
+                    <h3>CRUZ ROJAVICTORIA</h3>
+                    <p class="telefono">📞 834 316 23 77</p>
+                    <p>Emergencias médicas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nuevo León Content -->
+        <div class="estado-content" id="content-madero">
+            <h2>Recursos de Ayuda en Madero</h2>
+            <div class="recursos-grid">
+                <div class="recurso-card">
+                    <h3>Línea de Apoyo Psicológico</h3>
+                    <p class="telefono">📞 800-XXX-XXXX</p>
+                    <p>Orientación y apoyo emocional</p>
+                </div>
+                <div class="recurso-card">
+                    <h3>Hospital Universitario</h3>
+                    <p class="telefono">📞 81-XXXX-XXXX</p>
+                    <p>Atención psiquiátrica especializada</p>
+                </div>
+                <div class="recurso-card">
+                    <h3>Servicios de Emergencia</h3>
+                    <p class="telefono">📞 911</p>
+                    <p>Emergencias médicas y psiquiátricas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Puebla Content -->
+        <div class="estado-content" id="content-tampico">
+            <h2>Recursos de Ayuda en Tampico</h2>
+            <div class="recursos-grid">
+                <div class="recurso-card">
+                    <h3>Centro de Atención Psicológica</h3>
+                    <p class="telefono">📞 222-XXX-XXXX</p>
+                    <p>Consultas y orientación</p>
+                </div>
+                <div class="recurso-card">
+                    <h3>Línea de Crisis</h3>
+                    <p class="telefono">📞 800-XXX-XXXX</p>
+                    <p>Apoyo inmediato 24/7</p>
+                </div>
+                <div class="recurso-card">
+                    <h3>Servicios de Emergencia</h3>
+                    <p class="telefono">📞 911</p>
+                    <p>Emergencias médicas y psiquiátricas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Más Estados Content -->
+        <div class="estado-content" id="content-mas-estados">
+            <h2>Próximamente Más Ciudades</h2>
+            <p class="coming-soon">Estamos trabajando para incluir más ciudades. ¡Vuelve pronto!</p>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownBtn = document.getElementById('dropdown-btn');
+            const dropdownMenu = document.getElementById('dropdown-menu');
+            const selectedEstado = document.getElementById('selected-estado');
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+            const estadoContents = document.querySelectorAll('.estado-content');
+
+            // Toggle dropdown
+            dropdownBtn.addEventListener('click', function() {
+                dropdownMenu.classList.toggle('show');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.custom-dropdown')) {
+                    dropdownMenu.classList.remove('show');
+                }
+            });
+
+            // Handle item selection
+            dropdownItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const estado = this.getAttribute('data-estado');
+                    const estadoText = this.textContent;
+
+                    // Update selected text
+                    selectedEstado.textContent = estadoText;
+
+                    // Hide all content sections
+                    estadoContents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+
+                    // Show selected content
+                    const selectedContent = document.getElementById('content-' + estado);
+                    if (selectedContent) {
+                        selectedContent.classList.add('active');
+                    }
+
+                    // Close dropdown
+                    dropdownMenu.classList.remove('show');
+                });
+            });
+        });
+    </script>
+}
