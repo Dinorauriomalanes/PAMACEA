@@ -1,0 +1,140 @@
+@{
+    ViewData["Title"] = "Asistente IA";
+}
+
+<div class="chat-container">
+    <div class="chat-header">
+        <h1>Asistente Médico IA</h1>
+        <p>Pregunta sobre anatomía, salud y bienestar.</p>
+    </div>
+    
+    <div id="chat-history" class="chat-history">
+        <div class="message ai-message">
+            <div class="message-content">
+                Hola, soy tu asistente virtual. ¿En qué puedo ayudarte hoy?
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-input-area">
+        <input type="text" id="user-input" placeholder="Escribe tu pregunta aquí..." />
+        <button id="send-btn">Enviar</button>
+    </div>
+</div>
+
+<style>
+    .chat-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        background: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 70vh;
+    }
+
+    .chat-header {
+        background: linear-gradient(135deg, #00ae98, #a3fafe);
+        padding: 1.5rem;
+        color: white;
+        text-align: center;
+    }
+
+    .chat-header h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        color: #fff;
+    }
+
+    .chat-header p {
+        margin: 0.5rem 0 0;
+        opacity: 0.9;
+    }
+
+    .chat-history {
+        flex: 1;
+        padding: 1.5rem;
+        overflow-y: auto;
+        background: #f8f9fa;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .message {
+        display: flex;
+        margin-bottom: 0.5rem;
+    }
+
+    .message.user-message {
+        justify-content: flex-end;
+    }
+
+    .message.ai-message {
+        justify-content: flex-start;
+    }
+
+    .message-content {
+        max-width: 70%;
+        padding: 1rem;
+        border-radius: 15px;
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+    .user-message .message-content {
+        background: #00ae98;
+        color: white;
+        border-bottom-right-radius: 5px;
+    }
+
+    .ai-message .message-content {
+        background: #e9ecef;
+        color: #333;
+        border-bottom-left-radius: 5px;
+    }
+
+    .chat-input-area {
+        padding: 1.5rem;
+        background: white;
+        border-top: 1px solid #eee;
+        display: flex;
+        gap: 1rem;
+    }
+
+    #user-input {
+        flex: 1;
+        padding: 1rem;
+        border: 2px solid #eee;
+        border-radius: 10px;
+        font-size: 1rem;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+
+    #user-input:focus {
+        border-color: #00ae98;
+    }
+
+    #send-btn {
+        background: #00ae98;
+        color: white;
+        border: none;
+        padding: 0 2rem;
+        border-radius: 10px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    #send-btn:hover {
+        background: #008f7d;
+    }
+
+    #send-btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+    }
+</style>

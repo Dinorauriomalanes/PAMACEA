@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/chat-widget.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ProyectoPamacea.styles.css" asp-append-version="true" />
 </head>
 <body>
@@ -38,6 +39,29 @@
             &copy; 2025 - ProyectoPamacea - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    <!-- Chat Widget -->
+    <div id="chat-widget-container" class="chat-widget-container">
+        <div class="chat-header-widget">
+            <span>Asistente IA</span>
+            <button id="close-chat-btn" class="close-btn">&times;</button>
+        </div>
+        <div id="widget-chat-history" class="chat-history-widget">
+            <div class="message ai-message">
+                <div class="message-content">
+                    ¡Hola! ¿Puedo ayudarte en algo?
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-area-widget">
+            <input type="text" id="widget-user-input" placeholder="Escribe aquí..." />
+            <button id="widget-send-btn">➤</button>
+        </div>
+    </div>
+
+    <button id="chat-toggle-btn" class="chat-toggle-btn">
+        <img src="~/images/BotonIA.png" alt="Chat IA" />
+    </button>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

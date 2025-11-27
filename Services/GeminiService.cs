@@ -1,0 +1,92 @@
+using System.Text;
+using System.Text.Json;
+
+namespace PAMACEA.Services
+{
+    public class GeminiService
+    {
+        private readonly HttpClient _httpClient;
+        private readonly string _apiKey;
+        private readonly string _baseUrl;
+
+        public GeminiService(HttpClient httpClient, IConfiguration configuration)
+        {
+            _httpClient = httpClient;
+            _apiKey = configuration["Gemini:ApiKey"];
+            _baseUrl = configuration["Gemini:BaseUrl"];
+        }
+
+        public async Task<string> GenerateContentAsync(string prompt)
+        {
+            var requestBody = new
+            {
+                contents = new[]
+                {
+                    new
+                    {
+                        parts = new[]
+                        {
+                            new { text = prompt }
+                        }
+                    }
+                }
+            };
+
+            var jsonContent = new StringContent(
+                JsonSerializer.Serialize(requestBody),
+                Encoding.UTF8,
+                "application/json");
+
+            var url = $"{_baseUrl}?key={_apiKey}";
+
+            try 
+            {
+                var response = await _httpClient.PostAsync(url, jsonContent);
+                var responseString = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    // Log this error or throw with detailed message
+                    throw new Exception($"Gemini API Error ({response.StatusCode}): {responseString}");
+                }
+
+                using var responseJson = JsonDocument.Parse(responseString);
+                var root = responseJson.RootElement;
+
+                // Check if we have candidates
+                if (root.TryGetProperty("candidates", out var candidates) && candidates.GetArrayLength() > 0)
+                {
+                    var firstCandidate = candidates[0];
+                    
+                    // Check for content
+                    if (firstCandidate.TryGetProperty("content", out var content) && 
+                        content.TryGetProperty("parts", out var parts) && 
+                        parts.GetArrayLength() > 0)
+                    {
+                        return parts[0].GetProperty("text").GetString() ?? "No text generated.";
+                    }
+                    
+                    // Check for finishReason if no content
+                    if (firstCandidate.TryGetProperty("finishReason", out var finishReason))
+                    {
+                        return $"No response generated. Reason: {finishReason.GetString()}";
+                    }
+                }
+
+                return $"Unexpected response format: {responseString}";
+            }
+            catch (Exception ex)
+            {
+                // This will be caught by the controller
+                throw new Exception($"Service Error: {ex.Message}");
+            }
+        }
+
+        public async Task<string> GetAvailableModelsAsync()
+        {
+            var url = $"https://generativelanguage.googleapis.com/v1beta/models?key={_apiKey}";
+            var response = await _httpClient.GetAsync(url);
+            return await response.Content.ReadAsStringAsync();
+        }
+    }
+}

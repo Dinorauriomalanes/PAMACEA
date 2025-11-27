@@ -18,7 +18,7 @@ public class HomeController : Controller
         return View();
     }
 
-    public IActionResult Privacy()
+    public IActionResult Chat()
     {
         return View();
     }
@@ -27,7 +27,6 @@ public class HomeController : Controller
     {
         return View();
     }
-
     public IActionResult Anatomia()
     {
         return View();
