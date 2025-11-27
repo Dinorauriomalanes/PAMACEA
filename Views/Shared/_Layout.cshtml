@@ -17,12 +17,38 @@
         </a>
         <nav class="main-nav">
             <table>
-                <tr >
-                    <th><a class="enlace-animado" asp-controller="Home" asp-action="Enfermedades">ENFERMEDADES DE TEMPORADA</a></th>
-                    <th><a class="enlace-animado" asp-controller="Home" asp-action="Anatomia">ANATOMIA HUMANA</a></th>
-                    <th><a class="enlace-animado" asp-controller="Home" asp-action="SaludMental">SALUD MENTAL</a></th>
-                    <th><a class="enlace-animado" asp-controller="Home" asp-action="Ayuda">¿NECESITAS AYUDA?</a></th>
-                    <th><a class="enlace-animado" asp-controller="Home" asp-action="AcercaDe">ACERCA DE NOSOTROS</a></th>
+                <tr>
+                    <th>
+                        <a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "Enfermedades" ? "active" : "")"
+                            asp-controller="Home" asp-action="Enfermedades">
+                            ENFERMEDADES DE TEMPORADA
+                        </a>
+                    </th>
+                    <th>
+                        <a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "Anatomia" ? "active" : "")"
+                            asp-controller="Home" asp-action="Anatomia">
+                            ANATOMÍA HUMANA
+                        </a>
+                    </th>
+                    <th>
+                        <a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "SaludMental" ? "active" : "")"
+                            asp-controller="Home" asp-action="SaludMental">
+                            SALUD MENTAL
+                        </a>
+                    </th>
+                    <th>
+                        <a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "Ayuda" ? "active" : "")"
+                            asp-controller="Home" asp-action="Ayuda">
+                            ¿NECESITAS AYUDA?
+                        </a>
+                    </th>
+                    <th>
+                        <a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "Acercade" ? "active" : "")"
+                            asp-controller="Home" asp-action="Acercade">
+                            ACERCA DE NOSOTROS
+                        </a>
+                    </th>
+
                 </tr>
             </table>
         </nav>
