@@ -20,7 +20,11 @@
     transition: transform 0.3s ease-out;
 }
 
-.enlace-animado:hover::after {
+.enlace-animado:hover::after{
+    transform: scaleX(1);
+    transform-origin: bottom left;
+}
+.enlace-animado.active::after {
     transform: scaleX(1);
     transform-origin: bottom left;
 }
