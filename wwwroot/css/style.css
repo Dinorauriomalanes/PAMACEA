@@ -331,3 +331,15 @@ body {
         font-size: 1.5rem;
     }
 }
+.cuadro{
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0c86c3;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
