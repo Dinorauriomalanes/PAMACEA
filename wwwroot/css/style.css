@@ -20,17 +20,18 @@
     transition: transform 0.3s ease-out;
 }
 
-.enlace-animado:hover::after{
+.enlace-animado:hover::after {
     transform: scaleX(1);
     transform-origin: bottom left;
 }
+
 .enlace-animado.active::after {
     transform: scaleX(1);
     transform-origin: bottom left;
 }
 
 th {
-    padding: 15px 20px;
+    padding: 10px;
 }
 
 body {
@@ -331,15 +332,45 @@ body {
         font-size: 1.5rem;
     }
 }
-.cuadro{
+
+.cuadro {
     text-align: center;
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
     color: #0c86c3;
-    line-height: 1.8;
+    line-height: 1.5;
     margin-bottom: 20px;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Contenedor de las 3 tarjetas */
+.contenedor-cards {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 30px auto;
+    flex-wrap: wrap;
+    width: 90%;
+}
+
+/* Cada tarjeta */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.member {
+    margin-bottom: 10px;
+    text-align: left;
 }
