@@ -1,5 +1,129 @@
 @{
     ViewData["Title"] = "Enfermedades de Temporada";
 }
-<h1>@ViewData["Title"]</h1>
-<p>Contenido de Enfermedades de Temporada.</p>
+
+<div class="ayuda-container">
+    <div class="dropdown-section">
+        <label for="enfermedad-select" class="dropdown-label">SELECCIONA UNA ENFERMEDAD</label>
+        <div class="custom-dropdown">
+            <button class="dropdown-button" id="dropdown-btn">
+                <span id="selected-enfermedad">INFLUENZA</span>
+                <span class="dropdown-arrow">▼</span>
+            </button>
+            <div class="dropdown-menu" id="dropdown-menu">
+                <div class="dropdown-item" data-enfermedad="influenza">INFLUENZA</div>
+                <!-- Future options can be added here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="content-section">
+        <!-- Influenza Content -->
+        <div class="estado-content active" id="content-influenza">
+            <div class="enfermedad-layout">
+                <!-- Video Section (Left) -->
+                <div class="video-container">
+                    <video autoplay loop muted playsinline>
+                        <source src="~/Renders/influenza.mp4" type="video/mp4">
+                        Tu navegador no soporta el elemento de video.
+                    </video>
+                </div>
+
+                <!-- Info Section (Right) -->
+                <div class="info-container">
+                    <h2>INFLUENZA</h2>
+                    
+                    <div class="info-card">
+                        <p>
+                            Es una enfermedad infecciosa aguda del tracto respiratorio causada por el virus Influenza
+                            (principalmente tipos A y B). Es altamente contagiosa y se distingue por tener un inicio súbito y
+                            síntomas más intensos que el resfriado común.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="info-container">
+                    <h2>Sintomas</h2>
+                     <div class="info-card">
+                    <p>
+                            Inicio súbito y fuerte: Fiebre alta, dolor de cabeza (cefalea), dolores musculares y articulares
+                            (mialgias y artralgias), escalofríos intensos, agotamiento extremo (fatiga), y tos seca. El
+                            malestar general es profundo. Los síntomas nasales (escurrimiento) suelen ser menos
+                            prominentes al inicio que en un resfriado.
+                        </p>
+                    </div>
+                </div>
+                <div class="info-container">
+                    <h2>Condiciones Normales de Presentación</h2>
+                    <div class="info-card">
+                    <p>
+                            Inicio súbito y fuerte: Fiebre alta, dolor de cabeza (cefalea), dolores musculares y articulares
+                            (mialgias y artralgias), escalofríos intensos, agotamiento extremo (fatiga), y tos seca. El
+                            malestar general es profundo. Los síntomas nasales (escurrimiento) suelen ser menos
+                            prominentes al inicio que en un resfriado.
+                        </p>
+                    </div>
+                </div>
+                <div class="info-container">
+                    <h2>Prevención</h2>
+                    <div class="info-card">
+                      <ol>
+                            <li>Vacunación anual contra la Influenza (medida más efectiva).</li>
+                            <li>Lavado frecuente y correcto de manos.</li>
+                            <li>Cubrirse la boca y nariz con el ángulo interno del codo al toser o estornudar.</li>
+                            <li>Evitar el contacto cercano con personas enfermas.</li>
+                        </ol>
+                    </div>
+                </div>
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const dropdownBtn = document.getElementById('dropdown-btn');
+            const dropdownMenu = document.getElementById('dropdown-menu');
+            const selectedEnfermedad = document.getElementById('selected-enfermedad');
+            const dropdownItems = document.querySelectorAll('.dropdown-item');
+            const contentSections = document.querySelectorAll('.estado-content');
+
+            // Toggle dropdown
+            dropdownBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownMenu.classList.toggle('show');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.custom-dropdown')) {
+                    dropdownMenu.classList.remove('show');
+                }
+            });
+
+            // Handle item selection
+            dropdownItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const enfermedad = this.getAttribute('data-enfermedad');
+                    const enfermedadText = this.textContent;
+
+                    // Update selected text
+                    selectedEnfermedad.textContent = enfermedadText;
+
+                    // Hide all content sections
+                    contentSections.forEach(content => {
+                        content.classList.remove('active');
+                    });
+
+                    // Show selected content
+                    const selectedContent = document.getElementById('content-' + enfermedad);
+                    if (selectedContent) {
+                        selectedContent.classList.add('active');
+                    }
+
+                    // Close dropdown
+                    dropdownMenu.classList.remove('show');
+                });
+            });
+        });
+    </script>
+}

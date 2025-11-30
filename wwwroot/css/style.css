@@ -365,6 +365,396 @@ body {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 20px;
     padding: 20px;
+    align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(12, 134, 195, 0.3);
+}
+
+.dropdown-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(12, 134, 195, 0.4);
+}
+
+.dropdown-arrow {
+    transition: transform 0.3s ease;
+}
+
+.dropdown-button:hover .dropdown-arrow {
+    transform: translateY(2px);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 15px;
+    margin-top: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    padding: 15px 25px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #0c86c3;
+    font-weight: 600;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item:hover {
+    background: linear-gradient(90deg, #e8f5fa 0%, #d4eef7 100%);
+    padding-left: 30px;
+}
+
+.content-section {
+    margin-top: 40px;
+}
+
+.estado-content {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.estado-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.estado-content h2 {
+    text-align: center;
+    color: #0c86c3;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.recursos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.recurso-card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border-left: 5px solid #0c86c3;
+}
+
+.recurso-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.recurso-card h3 {
+    color: #0c86c3;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.recurso-card .telefono {
+    font-size: 1.4rem;
+    color: #00ae98;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.recurso-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.coming-soon {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #0c86c3;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .ayuda-intro {
+        font-size: 1rem;
+        padding: 15px;
+    }
+
+    .custom-dropdown {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .recursos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .estado-content h2 {
+        font-size: 1.5rem;
+    }
+}
+
+.cuadro {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0c86c3;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Contenedor de las 3 tarjetas */
+.contenedor-cards {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 30px auto;
+    flex-wrap: wrap;
+    width: 90%;
+}
+
+/* Cada tarjeta */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.dropdown-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(12, 134, 195, 0.4);
+}
+
+.dropdown-arrow {
+    transition: transform 0.3s ease;
+}
+
+.dropdown-button:hover .dropdown-arrow {
+    transform: translateY(2px);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 15px;
+    margin-top: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    padding: 15px 25px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: #0c86c3;
+    font-weight: 600;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.dropdown-item:last-child {
+    border-bottom: none;
+}
+
+.dropdown-item:hover {
+    background: linear-gradient(90deg, #e8f5fa 0%, #d4eef7 100%);
+    padding-left: 30px;
+}
+
+.content-section {
+    margin-top: 40px;
+}
+
+.estado-content {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.estado-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.estado-content h2 {
+    text-align: center;
+    color: #0c86c3;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.recursos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.recurso-card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border-left: 5px solid #0c86c3;
+}
+
+.recurso-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.recurso-card h3 {
+    color: #0c86c3;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.recurso-card .telefono {
+    font-size: 1.4rem;
+    color: #00ae98;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.recurso-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.coming-soon {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #0c86c3;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .ayuda-intro {
+        font-size: 1rem;
+        padding: 15px;
+    }
+
+    .custom-dropdown {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .recursos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .estado-content h2 {
+        font-size: 1.5rem;
+    }
+}
+
+.cuadro {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0c86c3;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Contenedor de las 3 tarjetas */
+.contenedor-cards {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 30px auto;
+    flex-wrap: wrap;
+    width: 90%;
+}
+
+/* Cada tarjeta */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 20px;
     width: 300px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     text-align: center;
@@ -373,4 +763,492 @@ body {
 .member {
     margin-bottom: 10px;
     text-align: left;
+}
+
+/* Estilos para Enfermedades de Temporada */
+.enfermedad-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+    /* Center vertically */
+    margin-top: 30px;
+    background: rgba(255, 255, 255, 0.95);
+    /* Card background moved here */
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    /* Ensure full width */
+}
+
+.video-container {
+    flex: 0 0 40%;
+    /* Fixed width for video, adjust as needed */
+    min-width: 300px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    /* Optional: if "encima" meant slightly overlapping or popping out */
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
+}
+
+.video-container:hover {
+    transform: scale(1.05);
+}
+
+.video-container video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.info-container {
+    flex: 1;
+    min-width: 300px;
+    /* Background removed from here */
+    padding: 20px;
+}
+
+.info-container h2 {
+    color: #0c86c3;
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+    /* Slightly larger */
+}
+
+.estado-content {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.estado-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.estado-content h2 {
+    text-align: center;
+    color: #0c86c3;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.recursos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.recurso-card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border-left: 5px solid #0c86c3;
+}
+
+.recurso-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.recurso-card h3 {
+    color: #0c86c3;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.recurso-card .telefono {
+    font-size: 1.4rem;
+    color: #00ae98;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.recurso-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.coming-soon {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #0c86c3;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .ayuda-intro {
+        font-size: 1rem;
+        padding: 15px;
+    }
+
+    .custom-dropdown {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .recursos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .estado-content h2 {
+        font-size: 1.5rem;
+    }
+}
+
+.cuadro {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0c86c3;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Contenedor de las 3 tarjetas */
+.contenedor-cards {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 30px auto;
+    flex-wrap: wrap;
+    width: 90%;
+}
+
+/* Cada tarjeta */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.member {
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+/* Estilos para Enfermedades de Temporada */
+.enfermedad-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+    /* Center vertically */
+    margin-top: 30px;
+    background: rgba(255, 255, 255, 0.95);
+    /* Card background moved here */
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    /* Ensure full width */
+}
+
+.video-container {
+    flex: 0 0 40%;
+    /* Fixed width for video, adjust as needed */
+    min-width: 300px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    /* Optional: if "encima" meant slightly overlapping or popping out */
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
+}
+
+.video-container:hover {
+    transform: scale(1.05);
+}
+
+.video-container video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.info-container {
+    flex: 1;
+    min-width: 300px;
+    /* Background removed from here */
+    padding: 20px;
+}
+
+.info-container h2 {
+    color: #0c86c3;
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+    /* Slightly larger */
+}
+
+.estado-content {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.estado-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.estado-content h2 {
+    text-align: center;
+    color: #0c86c3;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+.recursos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.recurso-card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border-left: 5px solid #0c86c3;
+}
+
+.recurso-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.recurso-card h3 {
+    color: #0c86c3;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+.recurso-card .telefono {
+    font-size: 1.4rem;
+    color: #00ae98;
+    font-weight: bold;
+    margin: 15px 0;
+}
+
+.recurso-card p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.coming-soon {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #0c86c3;
+    padding: 60px 20px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .ayuda-intro {
+        font-size: 1rem;
+        padding: 15px;
+    }
+
+    .custom-dropdown {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .recursos-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .estado-content h2 {
+        font-size: 1.5rem;
+    }
+}
+
+.cuadro {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0c86c3;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Contenedor de las 3 tarjetas */
+.contenedor-cards {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 30px auto;
+    flex-wrap: wrap;
+    width: 90%;
+}
+
+/* Cada tarjeta */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+}
+
+.member {
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+/* Estilos para Enfermedades de Temporada */
+.enfermedad-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    align-items: center;
+    /* Center vertically */
+    margin-top: 30px;
+    background: rgba(255, 255, 255, 0.95);
+    /* Card background moved here */
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    /* Ensure full width */
+}
+
+.video-container {
+    flex: 0 0 40%;
+    /* Fixed width for video, adjust as needed */
+    min-width: 300px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    /* Optional: if "encima" meant slightly overlapping or popping out */
+    transform: scale(1.02);
+    transition: transform 0.3s ease;
+}
+
+.video-container:hover {
+    transform: scale(1.05);
+}
+
+.video-container video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.info-container {
+    flex: 1;
+    min-width: 300px;
+    /* Background removed from here */
+    padding: 20px;
+}
+
+.info-container h2 {
+    color: #0c86c3;
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+    /* Slightly larger */
+    font-weight: bold;
+    text-align: left;
+    /* Align left for better reading next to video */
+}
+
+.info-card {
+    background: #f8fcfd;
+    /* Very light blue/white */
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid #00ae98;
+    /* Accent border */
+    color: #555;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.info-card:last-child {
+    margin-bottom: 0;
+}
+
+.info-card h3 {
+    color: #0c86c3;
+    /* Primary brand color */
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 10px;
+}
+
+.info-card p {
+    margin-bottom: 0;
+    text-align: justify;
+}
+
+.info-card ol {
+    padding-left: 20px;
+    margin-bottom: 0;
+}
+
+.info-card li {
+    margin-bottom: 8px;
 }

@@ -8,6 +8,16 @@ namespace PAMACEA.Services
         private readonly HttpClient _httpClient;
         private readonly string _apiKey;
         private readonly string _baseUrl;
+        
+        // System prompt to define the AI's persona
+        private const string _systemPrompt = @"Te llamas SofIA. Eres un asistente médico virtual amigable, profesional y empático. Tu objetivo es cuidar al usuario proporcionando información clara, responsable y útil sobre salud, anatomía y bienestar.
+        Reglas de SofIA:
+Solo respondes preguntas relacionadas con la salud. Si el usuario pregunta sobre otros temas, redirige amablemente la conversación hacia el bienestar y la salud.
+No das diagnósticos ni recetas, pero sí orientación general basada en información confiable.
+Hablas siempre con calidez, respeto y empatía.
+Si notas señales de temas sensibles como suicidio, autolesiones, violencia o abuso:Agradece la confianza del usuario,
+Responde con profunda empatía y apoyo emocional, Ofrece palabras de aliento y estrategias seguras de calma, 
+Deja claro que no está solo Debes estar preparada para responder temas complejos con paciencia y claridad.";
 
         public GeminiService(HttpClient httpClient, IConfiguration configuration)
         {
@@ -18,6 +28,9 @@ namespace PAMACEA.Services
 
         public async Task<string> GenerateContentAsync(string prompt)
         {
+            // Combine system prompt with user prompt
+            var fullPrompt = $"{_systemPrompt}\n\nUsuario: {prompt}";
+
             var requestBody = new
             {
                 contents = new[]
@@ -26,7 +39,7 @@ namespace PAMACEA.Services
                     {
                         parts = new[]
                         {
-                            new { text = prompt }
+                            new { text = fullPrompt }
                         }
                     }
                 }
