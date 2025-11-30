@@ -1,0 +1,66 @@
+.cuadro-acerca {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #0c86c3;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Contenedor de las 3 tarjetas */
+.contenedor-cards-acerca {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin: 30px auto;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+/* Cada tarjeta */
+.card-acerca {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.card-integrantes {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.member {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.asesor {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+small {
+    background: #3E8CB5;
+}
+
+.logo {
+    display: block;
+    margin: 0 auto;
+}
