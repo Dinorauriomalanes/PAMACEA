@@ -12,7 +12,9 @@
             </button>
             <div class="dropdown-menu" id="dropdown-menu">
                 <div class="dropdown-item" data-enfermedad="influenza">INFLUENZA</div>
-                <!-- Future options can be added here -->
+                <div class="dropdown-item" data-enfermedad="resfriado">Resfriado Común</div>
+                 <div class="dropdown-item" data-enfermedad="neumonia">Neumonía</div>
+                <!-- agregar mas enfermedades -->
             </div>
         </div>
     </div>
@@ -42,42 +44,170 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Detailed Sections (Outside layout) -->
+            <div class="info-container">
+                <div class="info-card">
+                    <h3>Síntomas</h3>
+                    <p>
+                        Inicio súbito y fuerte: Fiebre alta, dolor de cabeza (cefalea), dolores musculares y articulares
+                        (mialgias y artralgias), escalofríos intensos, agotamiento extremo (fatiga), y tos seca. El
+                        malestar general es profundo. Los síntomas nasales (escurrimiento) suelen ser menos
+                        prominentes al inicio que en un resfriado.
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-container">
+                <div class="info-card">
+                    <h3>Condiciones Normales de Presentación</h3>
+                    <p>
+                        La influenza es estacional en México, con una mayor circulación del virus entre noviembre y
+                        marzo (la temporada invernal). Se asocia a ambientes cerrados y concurridos (escuelas,
+                        guarderías), donde la transmisión por gotas respiratorias es eficiente. La falta de vacunación es
+                        el principal factor de riesgo.
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-container">
+                <div class="info-card">
+                    <h3>Prevención</h3>
+                    <ol>
+                        <li>Vacunación anual contra la Influenza (medida más efectiva).</li>
+                        <li>Lavado frecuente y correcto de manos.</li>
+                        <li>Cubrirse la boca y nariz con el ángulo interno del codo al toser o estornudar.</li>
+                        <li>Evitar el contacto cercano con personas enfermas.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resfriado Comun Content -->
+        <div class="estado-content" id="content-resfriado">
+            <div class="enfermedad-layout">
+                <!-- Video Section (Left) -->
+                <div class="video-container">
+                    <video autoplay loop muted playsinline>
+                        <source src="~/Renders/Rinofaringitis.mp4" type="video/mp4">
+                        Tu navegador no soporta el elemento de video.
+                    </video>
+                </div>
+
+                <!-- Info Section (Right) -->
+                <div class="info-container">
+                    <h2>Resfriado Común (Rinofaringitis)</h2>
+                    
+                    <div class="info-card">
+                        <p>
+                            Es la infección viral más frecuente en el ser humano, afectando el revestimiento interior de
+                            la nariz y garganta. Es causada por cientos de virus, siendo el Rhinovirus el más común,
+                            seguido por Coronavirus y otros.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Sections (Outside layout) -->
+            <div class="info-container">
+                <div class="info-card">
+                    <h3>Síntomas</h3>
+                    <p>
+                        Síntomas leves y progresivos: Estornudos, secreción nasal (primero acuosa y luego espesa),
+                        congestión nasal, tos leve, dolor de garganta y, en ocasiones, febrícula (temperatura
+                        ligeramente elevada). El malestar general es mucho menor que en la Influenza.
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-container">
+                <div class="info-card">
+                    <h3>Condiciones Normales de Presentación</h3>
+                    <p>
+                        Es la infección más común del invierno y se presenta bajo condiciones de cambios bruscos
+                        de temperatura, frío ambiental (lo que facilita la replicación viral en la mucosa nasal) y el
+                        contacto directo con personas infectadas.
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-container">
+                <div class="info-card">
+                    <h3>Prevención</h3>
+                    <ol>
+                        <li>Lavado de manos riguroso.</li>
+                        <li>Evitar tocarse la cara, especialmente ojos y nariz.</li>
+                        <li>Limpieza y desinfección de juguetes y superficies que el niño toque frecuentemente.</li>
+                        <li>Evitar cambios bruscos de temperatura.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Neumonía Content -->
+        <div class="estado-content" id="content-neumonia">
+            <div class="enfermedad-layout">
+                <!-- Video Section (Left) -->
+                <div class="video-container">
+                    <video autoplay loop muted playsinline>
+                        <source src="~/Renders/neumonia.mp4" type="video/mp4">
+                        Tu navegador no soporta el elemento de video.
+                    </video>
+                </div>
+
+                <!-- Info Section (Right)-->
+                <div class="info-container">
+                    <h2>Neumonía</h2>
+                    
+                    <div class="info-card">
+                        <p>
+                           Es una infección grave que afecta el parénquima pulmonar (las estructuras donde ocurre
+                           el intercambio de oxígeno), causando inflamación y llenado de los alvéolos con líquido o
+                           pus. Puede ser causada por virus (VSR, Influenza) o, más comúnmente, por bacterias.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Sections (Outside layout) -->
+            <div class="info-container">
+                <div class="info-card">
+                    <h3>Síntomas</h3>
+                    <p>
+                        Fiebre alta y persistente, tos con flemas (productiva), dolor en el pecho, y dificultad
+                        respiratoria (respiración rápida o disnea) con retracciones o tiraje. El niño puede tener un
+                        aspecto muy enfermo y letárgico.
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-container">
+                <div class="info-card">
+                    <h3>Condiciones Normales de Presentación</h3>
+                    <p>
+                       Se presenta como una complicación de una IRA viral previa o por exposición a agentes
+                       bacterianos, en condiciones de desnutrición, bajos esquemas de vacunación
+                       (neumococo, Haemophilus influenzae tipo b), o exposición a contaminantes
+                       ambientales (humo de leña).
+                    </p>
+                </div>
+            </div>
+
+            <div class="info-container">
+                <div class="info-card">
+                    <h3>Prevención</h3>
+                    <ol>
+                        <li> Esquema de vacunación completo.</li>
+                        <li> Evitar el frío extremo y el humo de tabaco. </li>
+                        <li>Tratamiento oportuno y adecuado de las infecciones respiratorias.</li>
+                        <li>Nutrición adecuada</li>
+                    </ol>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-<div class="info-container">
-                    <h2>Sintomas</h2>
-                     <div class="info-card">
-                    <p>
-                            Inicio súbito y fuerte: Fiebre alta, dolor de cabeza (cefalea), dolores musculares y articulares
-                            (mialgias y artralgias), escalofríos intensos, agotamiento extremo (fatiga), y tos seca. El
-                            malestar general es profundo. Los síntomas nasales (escurrimiento) suelen ser menos
-                            prominentes al inicio que en un resfriado.
-                        </p>
-                    </div>
-                </div>
-                <div class="info-container">
-                    <h2>Condiciones Normales de Presentación</h2>
-                    <div class="info-card">
-                    <p>
-                            Inicio súbito y fuerte: Fiebre alta, dolor de cabeza (cefalea), dolores musculares y articulares
-                            (mialgias y artralgias), escalofríos intensos, agotamiento extremo (fatiga), y tos seca. El
-                            malestar general es profundo. Los síntomas nasales (escurrimiento) suelen ser menos
-                            prominentes al inicio que en un resfriado.
-                        </p>
-                    </div>
-                </div>
-                <div class="info-container">
-                    <h2>Prevención</h2>
-                    <div class="info-card">
-                      <ol>
-                            <li>Vacunación anual contra la Influenza (medida más efectiva).</li>
-                            <li>Lavado frecuente y correcto de manos.</li>
-                            <li>Cubrirse la boca y nariz con el ángulo interno del codo al toser o estornudar.</li>
-                            <li>Evitar el contacto cercano con personas enfermas.</li>
-                        </ol>
-                    </div>
-                </div>
+
 @section Scripts {
     <script>
         document.addEventListener('DOMContentLoaded', function() {
