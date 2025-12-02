@@ -1,10 +1,80 @@
 @{
-    ViewData["Title"] = "Anatomia Humana";
+    ViewData["Title"] = "Anatomía interna simplificada";
 }
-<h1>@ViewData["Title"]</h1>
-<div id="viewer3D" style="width: 100%; height: 600px; background: linear-gradient(to bottom, #e0f7fa, #b2ebf2);"></div>
+<h1 style="text-align: center; color: #0c86c3;">@ViewData["Title"]</h1>
+<div id="viewer3D" style="width: 100%; height: 600px; background: linear-gradient(to bottom, #00d9ff, #0a83be);"></div>
 
-<p style="text-align: center; margin-top: 20px; color: #0c86c3; font-size: 1.1rem;">Contenido de Anatomia Humana.</p>
+<h2 style="text-align: center; color: #0c86c3; margin-top: 30px; margin-bottom: 20px; font-size: 2rem;">Conócelos de cerca</h2>
+
+<div class="video-cards-container">
+    <div class="video-card">
+        <div class="video-wrapper">
+            <!-- Placeholder video, user can replace source -->
+            <video autoplay loop muted playsinline>
+                <source src="~/Renders/corazon.mp4" type="video/mp4">
+            </video>
+        </div>
+        <h3>CORAZÓN</h3>
+        <p>El corazón es un órgano muscular encargado de bombear la sangre por todo el cuerpo.</p>
+    </div>
+    <div class="video-card">
+        <div class="video-wrapper">
+             <video autoplay loop muted playsinline>
+                <source src="~/Renders/estomago.mp4" type="video/mp4">
+            </video>
+        </div>
+        <h3>ESTOMAGO</h3>
+        <p>El estómago es un órgano del sistema digestivo que recibe los alimentos y los descompone usando ácidos y movimientos musculares.</p>
+    </div>
+    <div class="video-card">
+        <div class="video-wrapper">
+             <video autoplay loop muted playsinline>
+                <source src="~/Renders/higado.mp4" type="video/mp4">
+            </video>
+        </div>
+        <h3>HIGADO</h3>
+        <p>El hígado es un órgano vital que limpia la sangre, elimina toxinas y produce sustancias importantes para la digestión.</p>
+    </div>
+    <div class="video-card">
+        <div class="video-wrapper">
+             <video autoplay loop muted playsinline>
+                <source src="~/Renders/intestinos.mp4" type="video/mp4">
+            </video>
+        </div>
+        <h3>INTESTINOS</h3>
+        <p>El intestino delgado es donde el cuerpo absorbe la mayoría de los nutrientes de los alimentos ya digeridos.El intestino grueso es la parte final del sistema digestivo.</p>
+    </div>
+</div>
+<div class="video-cards-container">
+    <div class="video-card">
+        <div class="video-wrapper">
+             <video autoplay loop muted playsinline>
+                <source src="~/Renders/nasal.mp4" type="video/mp4">
+            </video>
+        </div>
+        <h3>CAVIDAD NASAL</h3>
+        <p>La cavidad nasal es el espacio dentro de la nariz por donde entra el aire. Su función es filtrar, calentar y humedecer el aire antes de que llegue a los pulmones.</p>
+    </div>
+    <div class="video-card">
+        <div class="video-wrapper">
+             <video autoplay loop muted playsinline>
+                <source src="~/Renders/pulmones.mp4" type="video/mp4">
+            </video>
+        </div>
+        <h3>PULMONES</h3>
+        <p>Los pulmones encargados de tomar el oxígeno del aire y eliminar el dióxido de carbono del cuerpo.</p>
+    </div>
+    <div class="video-card">
+        <div class="video-wrapper">
+             <video autoplay loop muted playsinline>
+                <source src="~/Renders/traquea.mp4" type="video/mp4">
+            </video>
+        </div>
+        <h3>TRAQUEA</h3>
+        <p>La tráquea es un tubo que conecta la garganta con los pulmones y permite el paso del aire.</p>
+    </div>
+</div>
+
 
 @section Scripts {
     <script type="importmap">
@@ -43,7 +113,7 @@
                 0.1,
                 1000
             );
-            camera.position.set(0, 2, 5);
+            camera.position.set(0, 2, 20);
             camera.lookAt(0, 0, 0);
             console.log("Cámara configurada");
 
@@ -75,7 +145,7 @@
             const controls = new OrbitControls(camera, renderer.domElement);
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
-            controls.minDistance = 1;
+            controls.minDistance = 5;
             controls.maxDistance = 10;
             controls.target.set(0, 0, 0);
             controls.update();
@@ -83,9 +153,9 @@
 
             // Loader GLB
             const loader = new GLTFLoader();
-            console.log("Cargando modelo desde: /dummy3.glb");
+            console.log("Cargando modelo desde: /anatomia2.glb");
             
-            loader.load('/dummy3.glb', function (gltf) {
+            loader.load('/anatomia2.glb', function (gltf) {
                     console.log("¡Modelo cargado exitosamente!");
                     const model = gltf.scene;
                     
@@ -93,7 +163,7 @@
                     const box = new THREE.Box3().setFromObject(model);
                     const size = box.getSize(new THREE.Vector3());
                     const center = box.getCenter(new THREE.Vector3());
-                    
+                    //
                     console.log("Tamaño del modelo:", size);
                     console.log("Centro del modelo:", center);
                     
@@ -102,18 +172,23 @@
                     // Auto-escalar
                     const maxDim = Math.max(size.x, size.y, size.z);
                     if (maxDim > 0) {
-                        const scale = 3 / maxDim;
+                        const targetSize = 15; // Tamaño objetivo más grande
+                        const scale = targetSize / maxDim;
                         model.scale.set(scale, scale, scale);
                         console.log("Modelo escalado a:", scale);
+                        
+                        // Ajustar cámara basao en el tamaño objetivo, no el original
+                        camera.position.set(0, targetSize * 0.8, targetSize * 1.5);
+                        camera.lookAt(0, targetSize * 0.3, 0);
+                        
+                        // Actualizar controles para que orbiten correctamente
+                        controls.target.set(0, 0, 0);
+                        controls.maxDistance = targetSize * 4;
+                        controls.update();
                     }
                     
                     scene.add(model);
                     console.log("Modelo añadido a la escena");
-                    
-                    // Ajustar cámara
-                    camera.position.set(0, maxDim, maxDim * 2);
-                    camera.lookAt(0, 0, 0);
-                    controls.update();
                 },
                 function (xhr) {
                     const percent = (xhr.loaded / xhr.total * 100);

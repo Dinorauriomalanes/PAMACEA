@@ -897,6 +897,36 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+.info-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.info-card h3 {
+    color: #0c86c3;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+    border-bottom: 2px solid #a3fafe;
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+.info-card p {
+    color: #555;
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .ayuda-intro {
@@ -1111,4 +1141,70 @@ body {
     .estado-content h2 {
         font-size: 1.5rem;
     }
+}
+
+/* Video Cards Styles (Anatomia) */
+.video-cards-container {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    padding: 20px;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.video-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    overflow: hidden;
+    text-align: center;
+    padding-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.video-wrapper {
+    width: 100%;
+    height: 180px;
+    background-color: black;
+    /* "lo negro" */
+    margin-bottom: 15px;
+    border-radius: 20px 20px 0 0;
+    /* Optional: if we want rounded top corners for the video too, but the card has overflow hidden so it should be fine */
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-wrapper video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.video-card h3 {
+    color: #0c86c3;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 10px 0;
+    text-transform: uppercase;
+}
+
+.video-card p {
+    color: #0c86c3;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+    text-transform: uppercase;
 }
