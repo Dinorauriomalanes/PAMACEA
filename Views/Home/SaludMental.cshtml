@@ -1,5 +1,45 @@
 @{
     ViewData["Title"] = "Salud Mental";
 }
-<h1>@ViewData["Title"]</h1>
-<p>Contenido de Salud Mental.</p>
+
+<div class="salud-mental-container">
+    <!-- Section 1: What is Mental Health -->
+    <h2 class="section-title">¿QUÉ ES LA SALUD MENTAL?</h2>
+    <div class="info-container">
+        <p>
+            La salud mental incluye nuestro bienestar emocional, psicológico y social. Afecta la forma en que pensamos, sentimos y actuamos cuando enfrentamos la vida. También ayuda a determinar cómo manejamos el estrés, nos relacionamos con los demás y tomamos decisiones.
+        </p>
+    </div>
+
+    <!-- Section 2: How to care for Mental Health -->
+    <h2 class="section-title">¿CÓMO CUIDAR MI SALUD MENTAL?</h2>
+    <div class="split-container">
+        <div class="text-side">
+            <h3>Escucha, siente y entiende tus emociones</h3>
+            <p>
+                Hay tantas formas de sentir emociones como seres humanos en el mundo. Es importante que sepamos que no son ni buenas ni malas. 
+                Todas las emociones son necesarias y son una gran forma para entender el mundo que te rodea.
+                Las emociones a veces pueden causarnos incomodidad, pero ¿cuál es la mejor forma de hacer frente a esos sentimientos? Sintiéndolos y aceptándolos; 
+                así, las emociones fluyen y llegará el momento en que comiences a sentirte mejor.
+            </p>
+        </div>
+        <div class="video-side">
+            <video autoplay loop muted playsinline>
+                <source src="~/Renders/mental.mp4" type="video/mp4">
+                Tu navegador no soporta el elemento de video.
+            </video>
+        </div>
+    </div>
+
+    <div class="split-container">
+        <div class="text-side">
+            <h3>Mantén un estilo de vida saludable</h3>
+            <p>
+                Duerme en horarios adecuados y las horas necesarias, encuentra actividades físicas que te motiven y realízalas cuando menos 15 minutos diariamente, mantén una alimentación balanceada y si tienes algún problema de salud física, acude a un adulto de confianza para que éste pueda atenderse.
+            </p>
+        </div>
+        <div class="image-side">
+            <img src="~/images/ejercicio.jpg" alt="Estilo de vida saludable">
+        </div>
+    </div>
+</div>

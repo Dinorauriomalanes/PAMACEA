@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (slideContainer && slides.length > 0) {
         let currentIndex = 0;
         const totalSlides = slides.length;
-        const intervalTime = 4000; // 4 seconds
+        const intervalTime = 6000; // 4 seconds
         let slideInterval;
 
         function showSlide(index) {
