@@ -77,13 +77,21 @@
         <div id="widget-chat-history" class="chat-history-widget">
             <div class="message ai-message">
                 <div class="message-content">
-                    ¡Hola! ¿Puedo ayudarte en algo?
+                    ¡Hola!Soy SofIA tu asistente medico virtual ¿Puedo ayudarte en algo?
                 </div>
             </div>
         </div>
         <div class="chat-input-area-widget">
             <input type="text" id="widget-user-input" placeholder="Escribe aquí..." />
-            <button id="widget-send-btn">➤</button>
+            <div class="input-actions" style="display: flex; gap: 5px; align-items: center;">
+                 <button id="sound-btn" class="icon-btn" title="Activar/Desactivar sonido">
+                    <img src="~/images/soundon.png" alt="Sonido" id="sound-icon" />
+                </button>
+                <button id="mic-btn" class="icon-btn" title="Activar micrófono">
+                    <img src="~/images/micon.png" alt="Micrófono" id="mic-icon" />
+                </button>
+                <button id="widget-send-btn">➤</button>
+            </div>
         </div>
     </div>
 

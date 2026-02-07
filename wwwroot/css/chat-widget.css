@@ -26,17 +26,17 @@
 
 .chat-widget-container {
     position: fixed;
-    bottom: 110px;
+    bottom: 20px;
     right: 20px;
-    width: 350px;
-    height: 500px;
+    width: calc(100vw - 40px);
+    height: calc(100vh - 40px);
     background: #fff;
     border-radius: 20px;
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
     display: none;
     /* Hidden by default */
     flex-direction: column;
-    z-index: 1000;
+    z-index: 1001;
     overflow: hidden;
     border: 1px solid #e0e0e0;
 }
@@ -92,7 +92,15 @@
     background: white;
     border-top: 1px solid #eee;
     display: flex;
+    flex-direction: column;
     gap: 10px;
+}
+
+.input-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
 }
 
 #widget-user-input {
@@ -101,6 +109,32 @@
     border: 1px solid #ddd;
     border-radius: 20px;
     outline: none;
+    width: 100%;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.icon-btn:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.1);
+}
+
+.icon-btn img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
 }
 
 #widget-send-btn {
@@ -114,6 +148,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-left: auto;
 }
 
 /* Reuse message styles but adjust for widget */

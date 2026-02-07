@@ -169,6 +169,100 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
+            // Microphone Logic
+            const micBtn = document.getElementById('mic-btn');
+            const micIcon = document.getElementById('mic-icon');
+            let recognition;
+            let isRecording = false;
+
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.lang = 'es-ES';
+                recognition.continuous = true;
+                recognition.interimResults = false;
+
+                recognition.onresult = (event) => {
+                    const transcript = event.results[event.results.length - 1][0].transcript;
+                    widgetInput.value += (widgetInput.value ? ' ' : '') + transcript;
+                };
+
+                recognition.onerror = (event) => {
+                    console.error('Speech recognition error', event.error);
+                    isRecording = false;
+                    micIcon.src = '/images/micon.png';
+                };
+
+                // Reset UI if it stops automatically (except manual stop which we handle)
+                recognition.onend = () => {
+                    if (isRecording) {
+                        isRecording = false;
+                        micIcon.src = '/images/micon.png';
+                    }
+                };
+
+                if (micBtn) {
+                    micBtn.addEventListener('click', () => {
+                        if (isRecording) {
+                            recognition.stop();
+                            isRecording = false;
+                            micIcon.src = '/images/micon.png';
+                        } else {
+                            recognition.start();
+                            isRecording = true;
+                            micIcon.src = '/images/micoff.png';
+                        }
+                    });
+                }
+            } else {
+                if (micBtn) micBtn.style.display = 'none';
+                console.log('Web Speech API not supported.');
+            }
+
+            // Sound Logic
+            const soundBtn = document.getElementById('sound-btn');
+            const soundIcon = document.getElementById('sound-icon');
+            let isSoundOn = true;
+
+            if (soundBtn && soundIcon) {
+                soundBtn.addEventListener('click', () => {
+                    isSoundOn = !isSoundOn;
+                    soundIcon.src = isSoundOn ? '/images/soundon.png' : '/images/soundoff.png';
+                });
+            }
+
+            async function playTTS(text) {
+                if (!isSoundOn) return;
+
+                try {
+                    const response = await fetch('https://api.fish.audio/v1/tts', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': 'Bearer 5dacd35f0dbc4859942cd25c81e4b7e6',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            text: text,
+                            reference_id: '8ef4a238714b45718ce04243307c57a7',
+                            format: 'mp3',
+                            mp3_bitrate: 128
+                        })
+                    });
+
+                    if (!response.ok) {
+                        console.error('TTS API error:', await response.text());
+                        return;
+                    }
+
+                    const blob = await response.blob();
+                    const url = URL.createObjectURL(blob);
+                    const audio = new Audio(url);
+                    audio.play();
+                } catch (error) {
+                    console.error('TTS Error:', error);
+                }
+            }
+
             async function sendWidgetMessage() {
                 const message = widgetInput.value.trim();
                 if (!message) return;
@@ -195,6 +289,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
                     const data = await response.json();
                     appendWidgetMessage(data.response, 'ai-message');
+
+                    // Play TTS
+                    await playTTS(data.response);
+
                 } catch (error) {
                     console.error('Error:', error);
                     appendWidgetMessage(`Error: ${error.message}`, 'ai-message');
