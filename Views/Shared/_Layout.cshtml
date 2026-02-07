@@ -10,55 +10,34 @@
     <link rel="stylesheet" href="~/css/chat-widget.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ProyectoPamacea.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/acerca.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/interfaz.css" asp-append-version="true"/>
 </head>
 <body>
     <header class="main-header">
         <a asp-controller="Home" asp-action="Index" class="logo-container">
             <img src="~/images/Logo.png" alt="Logo" class="site-logo">
         </a>
-        <nav class="main-nav">
-            <table>
-                <tr>
-                    <th>
-                        <a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "Enfermedades" ? "active" : "")"
-                            asp-controller="Home" asp-action="Enfermedades">
-                            ENFERMEDADES DE TEMPORADA
-                        </a>
-                    </th>
-                    <th>
-                        <a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "LineaDeVida" ? "active" : "")"
-                            asp-controller="Home" asp-action="LineaDeVida">
-                            LINEA DE VIDA
-                        </a>
-                    </th>
-                    <th>
-                        <a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "Anatomia" ? "active" : "")"
-                            asp-controller="Home" asp-action="Anatomia">
-                            ANATOMÍA HUMANA
-                        </a>
-                    </th>
-                    <th>
-                        <a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "SaludMental" ? "active" : "")"
-                            asp-controller="Home" asp-action="SaludMental">
-                            SALUD MENTAL
-                        </a>
-                    </th>
-                    <th>
-                        <a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "Ayuda" ? "active" : "")"
-                            asp-controller="Home" asp-action="Ayuda">
-                            ¿NECESITAS AYUDA?
-                        </a>
-                    </th>
-                    <th>
-                        <a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "Acercade" ? "active" : "")"
-                            asp-controller="Home" asp-action="Acercade">
-                            ACERCA DE NOSOTROS
-                        </a>
-                    </th>
+        <button class="menu-btn" id="menuBtn">☰</button>
 
-                </tr>
-            </table>
-        </nav>
+        <nav class="main-nav">
+            <div class="sidebar" id="sidebar">
+                <ul>
+                    <li><a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "Enfermedades" ? "active" : "")"
+                        asp-controller="Home" asp-action="Enfermedades">ENFERMEDADES DE TEMPORADA</a></li>
+                    <li><a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "Anatomia" ? "active" : "")"
+                        asp-controller="Home" asp-action="Anatomia">ANATOMÍA HUMANA</a></li>
+                    <li><a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "SaludMental" ? "active" : "")"
+                        asp-controller="Home" asp-action="SaludMental">SALUD MENTAL</a></li>
+                    <li><a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "Ayuda" ? "active" : "")"
+                        asp-controller="Home" asp-action="Ayuda">¿NECESITAS AYUDA?</a></li>
+                    <li><a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "Acercade" ? "active" : "")"
+                        asp-controller="Home" asp-action="Acercade">ACERCA DE NOSOTROS</a></li>
+                </ul>
+            </div>
+        </nav>   
+
+        <script src="script.js"></script>
+
     </header>
 
     <div class="container">

@@ -1,0 +1,86 @@
+.menu-btn {
+    display: block;        /* SIEMPRE visible */
+    position: fixed;
+    top: 15px;
+    left: 15px;
+    font-size: 24px;
+    background: #1e1e1e;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    z-index: 2000;
+}
+
+/* MENÚ */
+.sidebar {
+    position: fixed;    
+    top: 0;              
+    left: 0;              
+    height: 100vh;
+
+    width: 60px;
+    background: #1e1e1e;
+    transition: width 0.3s;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+/* EXPANDIR CON HOVER (PC) */
+.sidebar:hover {
+    width: 270px;
+}
+
+/* LISTA */
+.sidebar ul {
+    list-style: none;
+    padding: 20px 10px;
+}
+
+.sidebar li {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.sidebar li:hover {
+    background: #2a2a2a;
+}
+
+.sidebar span {
+    white-space: nowrap;
+}
+
+/* CONTENIDO */
+.content {
+    padding: 30px;
+    flex: 1;
+}
+
+/* MODO CELULAR */
+@media (max-width: 768px) {
+    .menu-btn {
+        display: block;
+    }
+
+    .sidebar {
+        position: fixed;
+        left: -220px;
+        width: 220px;
+        transition: left 0.3s;
+        z-index: 999;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    /* DESACTIVAR HOVER EN CELULAR */
+    .sidebar:hover {
+        width: 270px;
+    }
+}
