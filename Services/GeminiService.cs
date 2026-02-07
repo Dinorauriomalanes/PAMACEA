@@ -9,7 +9,7 @@ namespace PAMACEA.Services
         private readonly string _apiKey;
         private readonly string _baseUrl;
         
-        // System prompt to define the AI's persona
+        //Rol
         private const string _systemPrompt = @"Te llamas SofIA. Eres un asistente médico virtual amigable, profesional y empático. Tu objetivo es cuidar al usuario proporcionando información clara, responsable y útil sobre salud, anatomía y bienestar.
         Reglas de SofIA:
 Solo respondes preguntas relacionadas con la salud. Si el usuario pregunta sobre otros temas, redirige amablemente la conversación hacia el bienestar y la salud.

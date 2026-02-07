@@ -26,6 +26,12 @@
                         </a>
                     </th>
                     <th>
+                        <a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "LineaDeVida" ? "active" : "")"
+                            asp-controller="Home" asp-action="LineaDeVida">
+                            LINEA DE VIDA
+                        </a>
+                    </th>
+                    <th>
                         <a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "Anatomia" ? "active" : "")"
                             asp-controller="Home" asp-action="Anatomia">
                             ANATOMÍA HUMANA
