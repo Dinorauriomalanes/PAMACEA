@@ -1,83 +1,147 @@
-.menu-btn {
-    position: fixed;
-    top: 15px;
-    left: 15px;
-    font-size: 24px;
-    background: #17445c;   /* <- Cambiar color del boton de menu*/
-    color: white;
-    border: 2px solid #ffffff30;
-    padding: 10px 14px;
-    border-radius: 10px;
-    cursor: pointer;
-    z-index: 9999;
-}
-
+/* Sidebar Styles */
 .sidebar {
     position: fixed;
     top: 0;
     left: 0;
-
     width: 60px;
+    /* Collapsed width */
     height: 100vh;
-    background: linear-gradient(180deg, #17445c, #081a24);  /* <- Cambiar color doble del menu */
-
+    background: linear-gradient(to bottom, #00ae98 0%, #a3fafe 25%);
+    background-attachment: fixed;
     overflow: hidden;
-    transition: width 0.3s ease, left 0.3s ease;
+    transition: width 0.3s ease;
     z-index: 1000;
-
     display: flex;
     flex-direction: column;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Expand on Hover (Desktop) */
+@media (min-width: 769px) {
+    .sidebar:hover {
+        width: 250px;
+    }
 }
 
 .sidebar.active {
-    width: 220px;
+    width: 250px;
 }
 
+/* Hamburger Icon (Top) */
+.hamburger-icon {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: 0;
+    flex-shrink: 0;
+}
+
+/* Centered Arrow Indicator */
+.toggle-btn-center {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 60px;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.arrow-indicator {
+    color: rgb(0, 148, 182);
+    /* User selected color */
+    font-size: 30px;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+/* Hide arrow when expanded */
 @media (min-width: 769px) {
-    .sidebar:hover {
-        width: 220px;
+    .sidebar:hover .toggle-btn-center {
+        opacity: 0;
     }
 }
 
+.sidebar.active .toggle-btn-center {
+    opacity: 0;
+}
+
+/* Menu Items */
 .menu-items {
     list-style: none;
     padding: 0;
-
-    margin-top: auto;
-    margin-bottom: 140px;   
-    
+    margin-top: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    gap: 15px;
+    width: 250px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Show menu items on hover (desktop) or active (mobile) */
+@media (min-width: 769px) {
+    .sidebar:hover .menu-items {
+        opacity: 1;
+        visibility: visible;
+        transition-delay: 0.1s;
+    }
+}
+
+.sidebar.active .menu-items {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.1s;
 }
 
 .menu-items li {
-    width: 60%;
-    text-align: center;
-    padding: 12px 14px;
-
-    color: #00bfff;
+    width: 80%;
+    text-align: left;
+    padding: 10px;
+    color: white;
     font-size: 14px;
     font-weight: 500;
-
     border-radius: 10px;
     cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
+    transition: background 0.2s;
+}
+
+.menu-items li a {
+    color: #17445c;
+    text-decoration: none;
+    display: block;
+    width: 100%;
 }
 
 .menu-items li:hover {
-    background: #343847;    /* <- Cambiar color de la selección */
-    transform: scale(1.02);
+    background: rgba(255, 255, 255, 0.3);
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
     .sidebar {
-        width: 220px;
-        left: -220px;            
+        width: 60px;
+        /* Kept collapsed initially */
     }
 
+    /* When active on mobile, it expands */
     .sidebar.active {
-        left: 0;                 
+        width: 250px;
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
+        /* Stronger shadow on mobile */
+    }
+
+    .arrow-indicator {
+        font-size: 24px;
+        /* Slightly smaller on mobile */
     }
 }

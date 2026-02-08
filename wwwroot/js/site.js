@@ -235,10 +235,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (!isSoundOn) return;
 
                 try {
+                    // console.log("Sending TTS request...");
                     const response = await fetch('https://api.fish.audio/v1/tts', {
                         method: 'POST',
                         headers: {
-                            'Authorization': 'Bearer ',//pegar api de fish.audio
+                            'Authorization': 'Bearer 5dacd35f0dbc4859942cd25c81e4b7e6',
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({
@@ -250,16 +251,26 @@ document.addEventListener('DOMContentLoaded', function () {
                     });
 
                     if (!response.ok) {
-                        console.error('TTS API error:', await response.text());
+                        const err = await response.text();
+                        console.error('TTS API error:', err);
+                        // Optional: Show error in chat for debugging
+                        // appendWidgetMessage(`Error de voz: ${err}`, 'ai-message');
                         return;
                     }
 
                     const blob = await response.blob();
                     const url = URL.createObjectURL(blob);
                     const audio = new Audio(url);
-                    audio.play();
+
+                    // Handle potential autoplay restrictions
+                    audio.play().catch(e => {
+                        console.error("Audio play failed:", e);
+                        // appendWidgetMessage("Error al reproducir audio (posible bloqueo del navegador)", 'ai-message');
+                    });
+
                 } catch (error) {
                     console.error('TTS Error:', error);
+                    // appendWidgetMessage(`Error interno de voz: ${error.message}`, 'ai-message');
                 }
             }
 

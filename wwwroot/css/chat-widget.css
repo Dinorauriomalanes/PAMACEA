@@ -36,7 +36,7 @@
     display: none;
     /* Hidden by default */
     flex-direction: column;
-    z-index: 1001;
+    z-index: 10000;
     overflow: hidden;
     border: 1px solid #e0e0e0;
 }
@@ -66,6 +66,22 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-radius: 20px 20px 0 0;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ai-header-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: contain;
+    background: white;
+    padding: 2px;
 }
 
 .close-btn {

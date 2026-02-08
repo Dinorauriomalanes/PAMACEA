@@ -39,7 +39,27 @@ body {
     min-height: 100vh;
     background-attachment: fixed;
     margin: 0;
+    padding-left: 60px;
+    /* Space for sidebar */
+    transition: padding-left 0.3s ease;
 }
+
+@media (max-width: 768px) {
+    body {
+        padding-left: 60px;
+        /* Keep space or overlap? keeping space is safer for content */
+    }
+
+    .main-header .site-logo {
+        height: 60px;
+        /* Smaller logo */
+    }
+
+    .main-header {
+        padding: 10px 0;
+    }
+}
+
 
 /* Carousel Styles */
 .carousel-container {
