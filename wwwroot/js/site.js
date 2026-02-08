@@ -238,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     const response = await fetch('https://api.fish.audio/v1/tts', {
                         method: 'POST',
                         headers: {
-                            'Authorization': 'Bearer 5dacd35f0dbc4859942cd25c81e4b7e6',
+                            'Authorization': 'Bearer ',//pegar api de fish.audio
                             'Content-Type': 'application/json'
                         },
                         body: JSON.stringify({

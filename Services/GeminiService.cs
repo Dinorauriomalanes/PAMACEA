@@ -1,6 +1,6 @@
 using System.Text;
 using System.Text.Json;
-
+//g
 namespace PAMACEA.Services
 {
     public class GeminiService
