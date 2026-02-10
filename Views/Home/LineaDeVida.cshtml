@@ -1,0 +1,86 @@
+@{
+    ViewData["Title"] = "Línea de Vida";
+}
+
+<div class="linea-vida-container">
+    <!-- Video Header Centered -->
+    <div class="video-header-container">
+        <img src="~/images/cora.png" alt="Corazón" class="header-image">
+    </div>
+
+    <!-- White Box Content -->
+    <div class="content-box-container">
+        <div class="info-card white-box">
+            <p>
+                No estás sola/solo, estamos para brindarte ayuda. Al presionar el botón te redirigirá a un sitio
+                seguro en el que te brindarán asesoría y orientación gratuitas, con psicólogos que estarán para escucharte las 24
+                horas los 365 días del año.
+            </p>
+        </div>
+        
+        <!-- Blue Button -->
+        <div class="action-button-container">
+            <a href="https://simisae.com.mx/" class="blue-btn">Atención psicológica gratis</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .linea-vida-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 20px;
+    }
+
+    .video-header-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .header-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px; /* Optional rounded corners */
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        display: block; /* Removes bottom space/gap */
+    }
+
+    .content-box-container {
+        width: 100%;
+        max-width: 800px; /* Limit width for readability */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .white-box {
+        background-color: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        text-align: center;
+        font-size: 1.1em;
+        color: #333;
+    }
+
+    .blue-btn {
+        background-color: #007bff; /* Standard blue, adjust if specific code needed */
+        color: white;
+        padding: 15px 30px;
+        border-radius: 25px;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 1.2em;
+        transition: background-color 0.3s;
+        display: inline-block;
+    }
+
+    .blue-btn:hover {
+        background-color: #0056b3;
+    }
+</style>

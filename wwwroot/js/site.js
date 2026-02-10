@@ -231,52 +231,107 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             }
 
-            async function playTTS(text) {
+            async function playTTS(text, preCreatedAudio) {
                 if (!isSoundOn) return;
 
-                try {
-                    // console.log("Sending TTS request...");
-                    const response = await fetch('https://api.fish.audio/v1/tts', {
-                        method: 'POST',
-                        headers: {
-                            'Authorization': 'Bearer ',//api de fish.audio
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            text: text,
-                            reference_id: '8ef4a238714b45718ce04243307c57a7',
-                            format: 'mp3',
-                            mp3_bitrate: 128
-                        })
-                    });
+                // Use the audio object created during the user click event
+                const audio = preCreatedAudio;
+                const mediaSource = new MediaSource();
+                audio.src = URL.createObjectURL(mediaSource);
 
-                    if (!response.ok) {
-                        const err = await response.text();
-                        console.error('TTS API error:', err);
-                        // Optional: Show error in chat for debugging
-                        // appendWidgetMessage(`Error de voz: ${err}`, 'ai-message');
-                        return;
+                // We already called play() in the click handler, but we can ensure it's playing
+                audio.play().catch(e => console.error("Audio resume failed:", e));
+
+                mediaSource.addEventListener('sourceopen', async () => {
+                    const sourceBuffer = mediaSource.addSourceBuffer('audio/mpeg');
+                    const queue = [];
+                    let isUpdating = false;
+
+                    function processQueue() {
+                        if (!isUpdating && queue.length > 0) {
+                            const chunk = queue.shift();
+                            try {
+                                sourceBuffer.appendBuffer(chunk);
+                                isUpdating = true;
+                            } catch (e) {
+                                console.error("SourceBuffer append error:", e);
+                            }
+                        }
                     }
 
-                    const blob = await response.blob();
-                    const url = URL.createObjectURL(blob);
-                    const audio = new Audio(url);
-
-                    // Handle potential autoplay restrictions
-                    audio.play().catch(e => {
-                        console.error("Audio play failed:", e);
-                        // appendWidgetMessage("Error al reproducir audio (posible bloqueo del navegador)", 'ai-message');
+                    sourceBuffer.addEventListener('updateend', () => {
+                        isUpdating = false;
+                        processQueue();
                     });
 
-                } catch (error) {
-                    console.error('TTS Error:', error);
-                    // appendWidgetMessage(`Error interno de voz: ${error.message}`, 'ai-message');
-                }
+                    try {
+                        const response = await fetch('https://api.fish.audio/v1/tts', {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': 'Bearer ',//api
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                text: text,
+                                reference_id: '8ef4a238714b45718ce04243307c57a7',
+                                format: 'mp3',
+                                mp3_bitrate: 128,
+                                latency: "normal"
+                            })
+                        });
+
+                        if (!response.ok) {
+                            const err = await response.text();
+                            console.error('TTS API error:', err);
+                            mediaSource.endOfStream();
+                            return;
+                        }
+
+                        const reader = response.body.getReader();
+
+                        while (true) {
+                            const { done, value } = await reader.read();
+                            if (done) {
+                                const checkEndInterval = setInterval(() => {
+                                    if (!isUpdating && queue.length === 0) {
+                                        try {
+                                            if (mediaSource.readyState === 'open') {
+                                                mediaSource.endOfStream();
+                                            }
+                                        } catch (e) { }
+                                        clearInterval(checkEndInterval);
+                                    }
+                                }, 100);
+                                break;
+                            }
+                            queue.push(value);
+                            processQueue();
+                        }
+
+                    } catch (error) {
+                        console.error('TTS streaming error:', error);
+                        try {
+                            if (mediaSource.readyState === 'open') {
+                                mediaSource.endOfStream();
+                            }
+                        } catch (e) { }
+                    }
+                });
             }
 
             async function sendWidgetMessage() {
                 const message = widgetInput.value.trim();
                 if (!message) return;
+
+                // --- CRITICAL FIX: Initialize Audio Context on User Interaction ---
+                // We create the Audio object immediately when the user clicks/presses enter
+                // This "unlocks" the browser's autoplay restriction.
+                let preCreatedAudio = null;
+                if (isSoundOn) {
+                    preCreatedAudio = new Audio();
+                    // Play silence to unlock
+                    preCreatedAudio.play().catch(e => console.log("Audio unlock catch:", e));
+                }
 
                 // Add user message
                 appendWidgetMessage(message, 'user-message');
@@ -301,8 +356,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     const data = await response.json();
                     appendWidgetMessage(data.response, 'ai-message');
 
-                    // Play TTS
-                    await playTTS(data.response);
+                    // Play TTS passing the unlocked audio object
+                    await playTTS(data.response, preCreatedAudio);
 
                 } catch (error) {
                     console.error('Error:', error);

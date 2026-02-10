@@ -32,6 +32,8 @@
                         asp-controller="Home" asp-action="Anatomia">ANATOMÍA HUMANA</a></li>
                     <li><a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "SaludMental" ? "active" : "")"
                         asp-controller="Home" asp-action="SaludMental">SALUD MENTAL</a></li>
+                    <li><a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "LineaDeVida" ? "active" : "")"
+                        asp-controller="Home" asp-action="LineaDeVida">LÍNEA DE VIDA</a></li>
                     <li><a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "Ayuda" ? "active" : "")"
                         asp-controller="Home" asp-action="Ayuda">¿NECESITAS AYUDA?</a></li>
                     <li><a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "Acercade" ? "active" : "")"

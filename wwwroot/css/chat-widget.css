@@ -200,3 +200,11 @@
     color: #333;
     border-bottom-left-radius: 5px;
 }
+
+.debug-message .message-content {
+    background: #fff3cd;
+    color: #856404;
+    font-size: 0.8rem;
+    border: 1px solid #ffeeba;
+    font-family: monospace;
+}
