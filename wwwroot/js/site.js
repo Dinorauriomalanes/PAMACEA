@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Chat Logic for Widget
         if (widgetInput && widgetSendBtn && widgetHistory) {
-            widgetSendBtn.addEventListener('click', sendWidgetMessage);
+            widgetSendBtn.addEventListener('click', () => sendWidgetMessage());
             widgetInput.addEventListener('keypress', function (e) {
                 if (e.key === 'Enter') {
                     sendWidgetMessage();
@@ -183,7 +183,27 @@ document.addEventListener('DOMContentLoaded', function () {
                 recognition.interimResults = false;
 
                 recognition.onresult = (event) => {
-                    const transcript = event.results[event.results.length - 1][0].transcript;
+                    let transcript = event.results[event.results.length - 1][0].transcript;
+
+                    // Voice Command: "Enviar mensaje"
+                    if (transcript.toLowerCase().includes('enviar mensaje') || transcript.toLowerCase().includes('enviar el mensaje')) {
+                        // Remove command from text
+                        const cleanedTranscript = transcript.replace(/enviar mensaje|enviar el mensaje/gi, '').trim();
+
+                        if (cleanedTranscript) {
+                            widgetInput.value += (widgetInput.value ? ' ' : '') + cleanedTranscript;
+                        }
+
+                        // Stop recording and send
+                        recognition.stop();
+                        isRecording = false;
+                        micIcon.src = '/images/micon.png';
+
+                        // Trigger send immediately
+                        setTimeout(() => sendWidgetMessage(), 100);
+                        return;
+                    }
+
                     widgetInput.value += (widgetInput.value ? ' ' : '') + transcript;
                 };
 
@@ -193,7 +213,6 @@ document.addEventListener('DOMContentLoaded', function () {
                     micIcon.src = '/images/micon.png';
                 };
 
-                // Reset UI if it stops automatically (except manual stop which we handle)
                 recognition.onend = () => {
                     if (isRecording) {
                         isRecording = false;
@@ -231,90 +250,59 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             }
 
-            async function playTTS(text, preCreatedAudio) {
-                if (!isSoundOn) return;
+            // Typewriter effect function
+            function typeWriter(element, text, speed = 30) {
+                return new Promise(resolve => {
+                    let i = 0;
+                    element.innerHTML = ''; // Clear content
 
-                // Use the audio object created during the user click event
-                const audio = preCreatedAudio;
-                const mediaSource = new MediaSource();
-                audio.src = URL.createObjectURL(mediaSource);
-
-                // We already called play() in the click handler, but we can ensure it's playing
-                audio.play().catch(e => console.error("Audio resume failed:", e));
-
-                mediaSource.addEventListener('sourceopen', async () => {
-                    const sourceBuffer = mediaSource.addSourceBuffer('audio/mpeg');
-                    const queue = [];
-                    let isUpdating = false;
-
-                    function processQueue() {
-                        if (!isUpdating && queue.length > 0) {
-                            const chunk = queue.shift();
-                            try {
-                                sourceBuffer.appendBuffer(chunk);
-                                isUpdating = true;
-                            } catch (e) {
-                                console.error("SourceBuffer append error:", e);
-                            }
+                    function type() {
+                        if (i < text.length) {
+                            element.innerHTML += text.charAt(i);
+                            i++;
+                            widgetHistory.scrollTop = widgetHistory.scrollHeight;
+                            setTimeout(type, speed);
+                        } else {
+                            resolve();
                         }
                     }
+                    type();
+                });
+            }
 
-                    sourceBuffer.addEventListener('updateend', () => {
-                        isUpdating = false;
-                        processQueue();
-                    });
-
+            // Helper to fetch audio from OpenAI GPT-4o TTS
+            async function fetchAudioForLater(text, audioObj) {
+                return new Promise(async (resolve, reject) => {
                     try {
-                        const response = await fetch('https://api.fish.audio/v1/tts', {
+                        // Using OpenAI API structure as requested
+                        const response = await fetch('https://api.openai.com/v1/audio/speech', {
                             method: 'POST',
                             headers: {
-                                'Authorization': 'Bearer ',//api
+                                'Authorization': '*', // PLACEHOLDER
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
-                                text: text,
-                                reference_id: '8ef4a238714b45718ce04243307c57a7',
-                                format: 'mp3',
-                                mp3_bitrate: 128,
-                                latency: "normal"
+                                model: 'gpt-4o-mini-tts-2025-12-15', // Specific model requested
+                                input: text,
+                                voice: 'marin' // Default voice, can be changed to echo, fable, onyx, nova, shimmer
                             })
                         });
 
-                        if (!response.ok) {
-                            const err = await response.text();
-                            console.error('TTS API error:', err);
-                            mediaSource.endOfStream();
-                            return;
+                        if (response.ok) {
+                            const blob = await response.blob();
+                            const url = URL.createObjectURL(blob);
+                            audioObj.src = url;
+                            audioObj.oncanplay = () => resolve();
+                            audioObj.onerror = (e) => reject(e);
+                            resolve();
+                        } else {
+                            const errText = await response.text();
+                            console.error("TTS API Error:", errText);
+                            reject(errText);
                         }
-
-                        const reader = response.body.getReader();
-
-                        while (true) {
-                            const { done, value } = await reader.read();
-                            if (done) {
-                                const checkEndInterval = setInterval(() => {
-                                    if (!isUpdating && queue.length === 0) {
-                                        try {
-                                            if (mediaSource.readyState === 'open') {
-                                                mediaSource.endOfStream();
-                                            }
-                                        } catch (e) { }
-                                        clearInterval(checkEndInterval);
-                                    }
-                                }, 100);
-                                break;
-                            }
-                            queue.push(value);
-                            processQueue();
-                        }
-
-                    } catch (error) {
-                        console.error('TTS streaming error:', error);
-                        try {
-                            if (mediaSource.readyState === 'open') {
-                                mediaSource.endOfStream();
-                            }
-                        } catch (e) { }
+                    } catch (e) {
+                        console.error("TTS Fetch Error:", e);
+                        reject(e);
                     }
                 });
             }
@@ -323,14 +311,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 const message = widgetInput.value.trim();
                 if (!message) return;
 
-                // --- CRITICAL FIX: Initialize Audio Context on User Interaction ---
-                // We create the Audio object immediately when the user clicks/presses enter
-                // This "unlocks" the browser's autoplay restriction.
+                // Initialize Audio Context on User Interaction
                 let preCreatedAudio = null;
                 if (isSoundOn) {
-                    preCreatedAudio = new Audio();
-                    // Play silence to unlock
-                    preCreatedAudio.play().catch(e => console.log("Audio unlock catch:", e));
+                    try {
+                        preCreatedAudio = new Audio();
+                        // Silent play to unlock autoplay
+                        await preCreatedAudio.play().catch(() => { });
+                    } catch (e) {
+                        console.error("Audio init error:", e);
+                    }
                 }
 
                 // Add user message
@@ -354,10 +344,28 @@ document.addEventListener('DOMContentLoaded', function () {
                     }
 
                     const data = await response.json();
-                    appendWidgetMessage(data.response, 'ai-message');
 
-                    // Play TTS passing the unlocked audio object
-                    await playTTS(data.response, preCreatedAudio);
+                    // Create AI message container
+                    const messageContentDiv = appendWidgetMessage('', 'ai-message');
+
+                    // Parallel: Typewriter + Audio Fetch
+                    const typingPromise = typeWriter(messageContentDiv, data.response);
+
+                    let audioFetchingPromise = Promise.resolve();
+                    if (isSoundOn && preCreatedAudio) {
+                        audioFetchingPromise = fetchAudioForLater(data.response, preCreatedAudio)
+                            .catch(e => console.error("Audio fetch failed (check API Key):", e));
+                    }
+
+                    // Wait for BOTH
+                    await typingPromise;
+
+                    if (isSoundOn && preCreatedAudio) {
+                        await audioFetchingPromise;
+                        if (preCreatedAudio.src) {
+                            preCreatedAudio.play().catch(e => console.error("Final play error:", e));
+                        }
+                    }
 
                 } catch (error) {
                     console.error('Error:', error);
@@ -380,6 +388,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 messageDiv.appendChild(contentDiv);
                 widgetHistory.appendChild(messageDiv);
                 widgetHistory.scrollTop = widgetHistory.scrollHeight;
+
+                return contentDiv;
             }
         }
     }
