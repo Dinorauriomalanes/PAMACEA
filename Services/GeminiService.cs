@@ -6,8 +6,8 @@ namespace PAMACEA.Services
     public class GeminiService
     {
         private readonly HttpClient _httpClient;
-        private readonly string _apiKey;
-        private readonly string _baseUrl;
+        private readonly string _openAiApiKey;
+        private readonly string _openAiModel;
         
         //Rol
         private const string _systemPrompt = @"Te llamas SofIA. Eres un asistente médico virtual amigable, profesional y empático. Tu objetivo es cuidar al usuario proporcionando información clara, responsable y útil sobre salud, anatomía y bienestar.
@@ -22,26 +22,19 @@ Deja claro que no está solo Debes estar preparada para responder temas complejo
         public GeminiService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
-            _apiKey = configuration["Gemini:ApiKey"];
-            _baseUrl = configuration["Gemini:BaseUrl"];
+            _openAiApiKey = configuration["OpenAI:ApiKey"];
+            _openAiModel = configuration["OpenAI:Model"] ?? "gpt-5-mini";
         }
 
         public async Task<string> GenerateContentAsync(string prompt)
         {
-            // Combine system prompt with user prompt
-            var fullPrompt = $"{_systemPrompt}\n\nUsuario: {prompt}";
-
             var requestBody = new
             {
-                contents = new[]
+                model = _openAiModel,
+                messages = new[]
                 {
-                    new
-                    {
-                        parts = new[]
-                        {
-                            new { text = fullPrompt }
-                        }
-                    }
+                    new { role = "system", content = _systemPrompt },
+                    new { role = "user", content = prompt }
                 }
             };
 
@@ -50,39 +43,29 @@ Deja claro que no está solo Debes estar preparada para responder temas complejo
                 Encoding.UTF8,
                 "application/json");
 
-            var url = $"{_baseUrl}?key={_apiKey}";
+            // Avoid adding duplicate headers if the same client is reused
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _openAiApiKey);
 
             try 
             {
-                var response = await _httpClient.PostAsync(url, jsonContent);
+                var response = await _httpClient.PostAsync("https://api.openai.com/v1/chat/completions", jsonContent);
                 var responseString = await response.Content.ReadAsStringAsync();
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    // Log this error or throw with detailed message
-                    throw new Exception($"Gemini API Error ({response.StatusCode}): {responseString}");
+                    throw new Exception($"OpenAI API Error ({response.StatusCode}): {responseString}");
                 }
 
                 using var responseJson = JsonDocument.Parse(responseString);
                 var root = responseJson.RootElement;
 
-                // Check if we have candidates
-                if (root.TryGetProperty("candidates", out var candidates) && candidates.GetArrayLength() > 0)
+                if (root.TryGetProperty("choices", out var choices) && choices.GetArrayLength() > 0)
                 {
-                    var firstCandidate = candidates[0];
-                    
-                    // Check for content
-                    if (firstCandidate.TryGetProperty("content", out var content) && 
-                        content.TryGetProperty("parts", out var parts) && 
-                        parts.GetArrayLength() > 0)
+                    var firstChoice = choices[0];
+                    if (firstChoice.TryGetProperty("message", out var message) && 
+                        message.TryGetProperty("content", out var content))
                     {
-                        return parts[0].GetProperty("text").GetString() ?? "No text generated.";
-                    }
-                    
-                    // Check for finishReason if no content
-                    if (firstCandidate.TryGetProperty("finishReason", out var finishReason))
-                    {
-                        return $"No response generated. Reason: {finishReason.GetString()}";
+                        return content.GetString() ?? "No content generated.";
                     }
                 }
 
@@ -90,16 +73,42 @@ Deja claro que no está solo Debes estar preparada para responder temas complejo
             }
             catch (Exception ex)
             {
-                // This will be caught by the controller
                 throw new Exception($"Service Error: {ex.Message}");
             }
         }
 
-        public async Task<string> GetAvailableModelsAsync()
+
+        public async Task<byte[]> GenerateSpeechAsync(string text)
         {
-            var url = $"https://generativelanguage.googleapis.com/v1beta/models?key={_apiKey}";
-            var response = await _httpClient.GetAsync(url);
-            return await response.Content.ReadAsStringAsync();
+            var requestBody = new
+            {
+                model = "tts-1", // standard tts model
+                input = text,
+                voice = "nova"
+            };
+
+            var jsonContent = new StringContent(
+                JsonSerializer.Serialize(requestBody),
+                Encoding.UTF8,
+                "application/json");
+
+            _httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _openAiApiKey);
+
+            try
+            {
+                var response = await _httpClient.PostAsync("https://api.openai.com/v1/audio/speech", jsonContent);
+                if (!response.IsSuccessStatusCode)
+                {
+                    var error = await response.Content.ReadAsStringAsync();
+                    throw new Exception($"TTS Error ({response.StatusCode}): {error}");
+                }
+
+                return await response.Content.ReadAsByteArrayAsync();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Speech Generation Error: {ex.Message}");
+            }
         }
     }
 }

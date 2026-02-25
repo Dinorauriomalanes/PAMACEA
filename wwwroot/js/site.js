@@ -3,7 +3,9 @@
 
 // Write your JavaScript code.
 
+console.log("SofIA: System initialized");
 document.addEventListener('DOMContentLoaded', function () {
+    console.log("SofIA: DOM Content Loaded");
     // --- Carousel Logic ---
     const slideContainer = document.querySelector('.carousel-slide');
     const slides = document.querySelectorAll('.carousel-slide img');
@@ -145,12 +147,71 @@ document.addEventListener('DOMContentLoaded', function () {
     const widgetSendBtn = document.getElementById('widget-send-btn');
     const widgetHistory = document.getElementById('widget-chat-history');
 
+    // Shared State for Widget
+    let isSoundOn = true;
+    let welcomeRead = false;
+
+    // Helper functions (moved to higher scope for widget)
+    function typeWriter(element, text, speed = 30) {
+        return new Promise(resolve => {
+            let i = 0;
+            element.innerHTML = '';
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    widgetHistory.scrollTop = widgetHistory.scrollHeight;
+                    setTimeout(type, speed);
+                } else {
+                    resolve();
+                }
+            }
+            type();
+        });
+    }
+
+    // Simplified Audio Playback Function
+    async function speak(text) {
+        if (!isSoundOn) {
+            console.log("SofIA: Sound is OFF, skipping speech.");
+            return;
+        }
+        console.log("SofIA: Requesting audio for:", text.substring(0, 30) + "...");
+        try {
+            const response = await fetch('/api/gemini/tts', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: text })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("SofIA: Playing audio from URL:", data.url);
+                const audio = new Audio(data.url);
+                return audio.play().catch(e => console.error("SofIA: Play error:", e));
+            } else {
+                console.error("SofIA: TTS Server Error");
+            }
+        } catch (e) {
+            console.error("SofIA: Network error during TTS", e);
+        }
+    }
+
     if (widgetContainer && toggleBtn && closeBtn) {
         // Toggle Widget
-        toggleBtn.addEventListener('click', () => {
+        toggleBtn.addEventListener('click', async () => {
             widgetContainer.classList.add('open');
             widgetContainer.style.display = 'flex';
             if (widgetInput) widgetInput.focus();
+
+            if (isSoundOn && !welcomeRead) {
+                console.log("SofIA: Reading welcome message...");
+                welcomeRead = true;
+                const welcomeMsg = widgetHistory.querySelector('.ai-message .message-content')?.textContent;
+                if (welcomeMsg) {
+                    speak(welcomeMsg.trim());
+                }
+            }
         });
 
         closeBtn.addEventListener('click', () => {
@@ -184,48 +245,32 @@ document.addEventListener('DOMContentLoaded', function () {
 
                 recognition.onresult = (event) => {
                     let transcript = event.results[event.results.length - 1][0].transcript;
-
-                    // Voice Command: "Enviar mensaje"
                     if (transcript.toLowerCase().includes('enviar mensaje') || transcript.toLowerCase().includes('enviar el mensaje')) {
-                        // Remove command from text
                         const cleanedTranscript = transcript.replace(/enviar mensaje|enviar el mensaje/gi, '').trim();
-
-                        if (cleanedTranscript) {
-                            widgetInput.value += (widgetInput.value ? ' ' : '') + cleanedTranscript;
-                        }
-
-                        // Stop recording and send
+                        if (cleanedTranscript) widgetInput.value += (widgetInput.value ? ' ' : '') + cleanedTranscript;
                         recognition.stop();
                         isRecording = false;
                         micIcon.src = '/images/micon.png';
-
-                        // Trigger send immediately
                         setTimeout(() => sendWidgetMessage(), 100);
                         return;
                     }
-
                     widgetInput.value += (widgetInput.value ? ' ' : '') + transcript;
                 };
 
-                recognition.onerror = (event) => {
-                    console.error('Speech recognition error', event.error);
+                recognition.onerror = () => {
                     isRecording = false;
                     micIcon.src = '/images/micon.png';
                 };
 
                 recognition.onend = () => {
-                    if (isRecording) {
-                        isRecording = false;
-                        micIcon.src = '/images/micon.png';
-                    }
+                    isRecording = false;
+                    micIcon.src = '/images/micon.png';
                 };
 
                 if (micBtn) {
                     micBtn.addEventListener('click', () => {
                         if (isRecording) {
                             recognition.stop();
-                            isRecording = false;
-                            micIcon.src = '/images/micon.png';
                         } else {
                             recognition.start();
                             isRecording = true;
@@ -235,75 +280,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             } else {
                 if (micBtn) micBtn.style.display = 'none';
-                console.log('Web Speech API not supported.');
             }
 
             // Sound Logic
             const soundBtn = document.getElementById('sound-btn');
             const soundIcon = document.getElementById('sound-icon');
-            let isSoundOn = true;
 
             if (soundBtn && soundIcon) {
                 soundBtn.addEventListener('click', () => {
                     isSoundOn = !isSoundOn;
+                    console.log("SofIA: Sound toggled to:", isSoundOn);
                     soundIcon.src = isSoundOn ? '/images/soundon.png' : '/images/soundoff.png';
-                });
-            }
-
-            // Typewriter effect function
-            function typeWriter(element, text, speed = 30) {
-                return new Promise(resolve => {
-                    let i = 0;
-                    element.innerHTML = ''; // Clear content
-
-                    function type() {
-                        if (i < text.length) {
-                            element.innerHTML += text.charAt(i);
-                            i++;
-                            widgetHistory.scrollTop = widgetHistory.scrollHeight;
-                            setTimeout(type, speed);
-                        } else {
-                            resolve();
-                        }
-                    }
-                    type();
-                });
-            }
-
-            // Helper to fetch audio from OpenAI GPT-4o TTS
-            async function fetchAudioForLater(text, audioObj) {
-                return new Promise(async (resolve, reject) => {
-                    try {
-                        // Using OpenAI API structure as requested
-                        const response = await fetch('https://api.openai.com/v1/audio/speech', {
-                            method: 'POST',
-                            headers: {
-                                'Authorization': '*', // PLACEHOLDER
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                model: 'gpt-4o-mini-tts-2025-12-15', // Specific model requested
-                                input: text,
-                                voice: 'marin' // Default voice, can be changed to echo, fable, onyx, nova, shimmer
-                            })
-                        });
-
-                        if (response.ok) {
-                            const blob = await response.blob();
-                            const url = URL.createObjectURL(blob);
-                            audioObj.src = url;
-                            audioObj.oncanplay = () => resolve();
-                            audioObj.onerror = (e) => reject(e);
-                            resolve();
-                        } else {
-                            const errText = await response.text();
-                            console.error("TTS API Error:", errText);
-                            reject(errText);
-                        }
-                    } catch (e) {
-                        console.error("TTS Fetch Error:", e);
-                        reject(e);
-                    }
                 });
             }
 
@@ -311,17 +298,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const message = widgetInput.value.trim();
                 if (!message) return;
 
-                // Initialize Audio Context on User Interaction
-                let preCreatedAudio = null;
-                if (isSoundOn) {
-                    try {
-                        preCreatedAudio = new Audio();
-                        // Silent play to unlock autoplay
-                        await preCreatedAudio.play().catch(() => { });
-                    } catch (e) {
-                        console.error("Audio init error:", e);
-                    }
-                }
+                console.log("SofIA: Sending message, sound is:", isSoundOn);
 
                 // Add user message
                 appendWidgetMessage(message, 'user-message');
@@ -332,40 +309,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 try {
                     const response = await fetch('/api/gemini/chat', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ message: message })
                     });
 
-                    if (!response.ok) {
-                        const errorText = await response.text();
-                        throw new Error(`Error del servidor: ${errorText}`);
-                    }
+                    if (!response.ok) throw new Error("Server error");
 
                     const data = await response.json();
+                    console.log("SofIA: AI Response received");
 
-                    // Create AI message container
                     const messageContentDiv = appendWidgetMessage('', 'ai-message');
 
-                    // Parallel: Typewriter + Audio Fetch
-                    const typingPromise = typeWriter(messageContentDiv, data.response);
-
-                    let audioFetchingPromise = Promise.resolve();
-                    if (isSoundOn && preCreatedAudio) {
-                        audioFetchingPromise = fetchAudioForLater(data.response, preCreatedAudio)
-                            .catch(e => console.error("Audio fetch failed (check API Key):", e));
-                    }
-
-                    // Wait for BOTH
-                    await typingPromise;
-
-                    if (isSoundOn && preCreatedAudio) {
-                        await audioFetchingPromise;
-                        if (preCreatedAudio.src) {
-                            preCreatedAudio.play().catch(e => console.error("Final play error:", e));
-                        }
-                    }
+                    // Typewriter and Audio in parallel to reduce delay
+                    console.log("SofIA: Starting typing and speech in parallel...");
+                    typeWriter(messageContentDiv, data.response);
+                    speak(data.response);
 
                 } catch (error) {
                     console.error('Error:', error);
@@ -380,18 +338,34 @@ document.addEventListener('DOMContentLoaded', function () {
             function appendWidgetMessage(text, className) {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `message ${className}`;
-
                 const contentDiv = document.createElement('div');
                 contentDiv.className = 'message-content';
                 contentDiv.textContent = text;
-
                 messageDiv.appendChild(contentDiv);
                 widgetHistory.appendChild(messageDiv);
                 widgetHistory.scrollTop = widgetHistory.scrollHeight;
-
                 return contentDiv;
             }
         }
     }
+    // Global test function for user console
+    window.testAudio = async () => {
+        console.log("--- STARTING MANUAL AUDIO TEST ---");
+        try {
+            const testText = "Hola, esta es una prueba de sonido de SofIA.";
+            const audio = new Audio();
+            console.log("1. Unlocking audio...");
+            await audio.play().catch(() => { });
+            console.log("2. Fetching test audio...");
+            await fetchAudioForLater(testText, audio);
+            console.log("3. Audio fetched, playing...");
+            await audio.play();
+            console.log("--- TEST SUCCESSFUL ---");
+            return "Prueba iniciada con éxito";
+        } catch (e) {
+            console.error("--- TEST FAILED ---", e);
+            return "Error en la prueba: " + e.message;
+        }
+    };
 });
 //Bearer 5dacd35f0dbc4859942cd25c81e4b7e6
