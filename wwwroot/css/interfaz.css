@@ -1,25 +1,28 @@
 /* Sidebar Styles */
-.sidebar {
+.sidebar.glassmorphism {
     position: fixed;
     top: 0;
     left: 0;
     width: 60px;
-    /* Collapsed width */
     height: 100vh;
-    background: linear-gradient(to bottom, #00ae98 0%, #a3fafe 25%);
-    background-attachment: fixed;
+    background: rgba(255, 255, 255, 0.1);
+    /* Transparent glass base */
+    backdrop-filter: blur(15px) saturate(180%);
+    -webkit-backdrop-filter: blur(15px) saturate(180%);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
     overflow: hidden;
-    transition: width 0.3s ease;
+    transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 1000;
     display: flex;
     flex-direction: column;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 4px 0 20px rgba(0, 0, 0, 0.05);
 }
 
 /* Expand on Hover (Desktop) */
 @media (min-width: 769px) {
     .sidebar:hover {
         width: 250px;
+        background: rgba(255, 255, 255, 0.15);
     }
 }
 
@@ -30,14 +33,36 @@
 /* Hamburger Icon (Top) */
 .hamburger-icon {
     width: 60px;
-    height: 60px;
+    padding: 15px 0;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
     margin-bottom: 0;
     flex-shrink: 0;
+    transition: background 0.3s;
+}
+
+.hamburger-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.bars {
+    font-size: 26px;
+    color: white;
+    line-height: 1;
+}
+
+.menu-label {
+    font-size: 10px;
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 /* Centered Arrow Indicator */
@@ -55,10 +80,10 @@
 }
 
 .arrow-indicator {
-    color: rgb(0, 148, 182);
-    /* User selected color */
-    font-size: 30px;
+    color: white;
+    font-size: 20px;
     font-weight: bold;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     transition: transform 0.3s ease;
 }
 
@@ -76,12 +101,11 @@
 /* Menu Items */
 .menu-items {
     list-style: none;
-    padding: 0;
-    margin-top: 20px;
+    padding: 20px;
+    margin-top: 10px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 15px;
+    gap: 12px;
     width: 250px;
     opacity: 0;
     visibility: hidden;
@@ -93,55 +117,74 @@
     .sidebar:hover .menu-items {
         opacity: 1;
         visibility: visible;
-        transition-delay: 0.1s;
     }
 }
 
 .sidebar.active .menu-items {
     opacity: 1;
     visibility: visible;
-    transition-delay: 0.1s;
 }
 
 .menu-items li {
-    width: 80%;
-    text-align: left;
-    padding: 10px;
-    color: white;
-    font-size: 14px;
-    font-weight: 500;
-    border-radius: 10px;
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 12px;
     cursor: pointer;
-    transition: background 0.2s;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .menu-items li a {
     color: #17445c;
+    /* Stronger blue for better contrast */
     text-decoration: none;
     display: block;
     width: 100%;
+    font-size: 14px;
+    font-weight: 700;
+    /* Slightly bolder */
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
 }
 
 .menu-items li:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(5px);
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .sidebar {
+    .sidebar.glassmorphism {
         width: 60px;
-        /* Kept collapsed initially */
+        height: 60px;
+        /* Solo mostrar la zona del botón */
+        background: transparent;
+        /* Ocultar la barra */
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border-right: none;
+        box-shadow: none;
     }
 
-    /* When active on mobile, it expands */
     .sidebar.active {
         width: 250px;
-        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.5);
-        /* Stronger shadow on mobile */
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(15px) saturate(180%);
+        -webkit-backdrop-filter: blur(15px) saturate(180%);
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 10px 0 40px rgba(0, 0, 0, 0.3);
     }
 
-    .arrow-indicator {
-        font-size: 24px;
-        /* Slightly smaller on mobile */
+    .hamburger-icon {
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 0 0 15px 0;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .toggle-btn-center {
+        display: none;
     }
 }

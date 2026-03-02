@@ -18,16 +18,21 @@
             <img src="~/images/Logo.png" alt="Logo" class="site-logo">
         </a>
         <nav class="main-nav">
-            <div class="sidebar" id="sidebar">
+            <div class="sidebar glassmorphism" id="sidebar">
                 <div class="hamburger-icon" id="menuBtn">
-                    <span style="font-size: 24px; color: white;">☰</span>
+                    <div class="hamburger-content">
+                        <span class="bars">☰</span>
+                        <span class="menu-label">Menu</span>
+                    </div>
                 </div>
                 <div class="toggle-btn-center">
-                    <span class="arrow-indicator">&gt;</span>
+                    <span class="arrow-indicator">&gt;&gt;</span>
                 </div>
                 <ul class="menu-items">
                     <li><a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "Enfermedades" ? "active" : "")"
                         asp-controller="Home" asp-action="Enfermedades">ENFERMEDADES DE TEMPORADA</a></li>
+                    <li><a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "ProgramaVerificados" ? "active" : "")"
+                        asp-controller="Home" asp-action="ProgramaVerificados">PROGRAMA DE VERIFICADOS</a></li>
                     <li><a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "Anatomia" ? "active" : "")"
                         asp-controller="Home" asp-action="Anatomia">ANATOMÍA HUMANA</a></li>
                     <li><a class="enlace-animado @(ViewContext.RouteData.Values["action"]!.ToString() == "SaludMental" ? "active" : "")"

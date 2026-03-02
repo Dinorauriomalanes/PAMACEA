@@ -46,8 +46,7 @@ body {
 
 @media (max-width: 768px) {
     body {
-        padding-left: 60px;
-        /* Keep space or overlap? keeping space is safer for content */
+        padding-left: 0;
     }
 
     .main-header .site-logo {
@@ -69,17 +68,20 @@ body {
     overflow: hidden;
     border-radius: 20px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    aspect-ratio: 16 / 9;
+    /* Mantener proporción base */
 }
 
 .carousel-slide {
     display: flex;
     width: 100%;
+    height: 100%;
     transition: transform 0.5s ease-in-out;
 }
 
 .carousel-slide img {
     width: 100%;
-    height: 400px;
+    height: 100%;
     object-fit: cover;
     cursor: pointer;
     flex-shrink: 0;
@@ -97,7 +99,7 @@ body {
     font-size: 24px;
     border-radius: 50%;
     transition: background-color 0.3s;
-    z-index: 10;
+    z-index: 101;
 }
 
 .carousel-btn:hover {
@@ -1319,5 +1321,40 @@ body {
 @media (max-width: 768px) {
     .split-container {
         flex-direction: column;
+    }
+
+    .carousel-container {
+        width: 100% !important;
+        /* Full width to cover gaps */
+        margin: 10px 0 !important;
+        aspect-ratio: 2 / 1;
+        border-radius: 0;
+        /* Optional: remove radius if it looks better full width */
+    }
+
+    .carousel-slide img {
+        height: 100% !important;
+    }
+}
+@media (max-width: 768px) {
+    .video-cards-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 20px 0;
+        gap: 30px;
+    }
+
+    .video-card {
+        width: 90%;
+        max-width: 350px;
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-header .site-logo {
+        height: 90px !important;
     }
 }
