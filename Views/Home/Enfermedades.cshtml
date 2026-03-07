@@ -1,461 +1,232 @@
 @{
     ViewData["Title"] = "Enfermedades de Temporada";
 }
+@model ProyectoPamacea.ViewModels.EnfermedadViewModel
+
+<h3>Estación actual: @Model.Estacion</h3>
 
 <div class="ayuda-container">
     <div class="dropdown-section">
-        <label for="enfermedad-select" class="dropdown-label">SELECCIONA UNA ENFERMEDAD</label>
+        <label for="enfermedad-select" class="dropdown-label">SELECCIONA UNA ESTACION</label>
         <div class="custom-dropdown">
             <button class="dropdown-button" id="dropdown-btn">
-                <span id="selected-enfermedad">Influenza</span>
+                <span id="selected-enfermedad">Invierno</span>
                 <span class="dropdown-arrow">▼</span>
             </button>
             <div class="dropdown-menu" id="dropdown-menu">
+                <div class="dropdown-item" data-enfermedad="invierno">Invierno</div>
+                <div class="dropdown-item" data-enfermedad="primavera">Primavera</div>
+                 <div class="dropdown-item" data-enfermedad="verano">Verano</div>
+                 <div class="dropdown-item" data-enfermedad="otono">Otoño</div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.Estacion == "Invierno")
+    {
+        <div class="custom-dropdown">
+            <button type="button" class="dropdown-button">
+                <span class="selected-enfermedad">Influenza</span>
+                <span class="dropdown-arrow">▼</span>
+            </button>
+            <div class="dropdown-menu">
                 <div class="dropdown-item" data-enfermedad="influenza">Influenza</div>
-                <div class="dropdown-item" data-enfermedad="resfriado">Resfriado Común</div>
-                 <div class="dropdown-item" data-enfermedad="neumonia">Neumonía</div>
-                 <div class="dropdown-item" data-enfermedad="bronquitis">Bronquitis</div>
-                 <div class="dropdown-item" data-enfermedad="faringitis">Faringitis</div>
-                 <div class="dropdown-item" data-enfermedad="gripe">Gripe</div>
-                <!-- agregar mas enfermedades -->
+                <div class="dropdown-item" data-enfermedad="resfriado">Resfriado</div>
+                <div class="dropdown-item" data-enfermedad="neumonia">Neumonía</div>
             </div>
         </div>
-    </div>
 
-    <div class="content-section">
+        <!-- CONTENIDO -->
+        <div class="content-section">
         <!-- Influenza Content -->
-        <div class="estado-content active" id="content-influenza">
-            <div class="enfermedad-layout">
-                <!-- Video Section (Left) -->
-                <div class="video-container">
-                    <video autoplay loop muted playsinline>
-                        <source src="~/Renders/influenza.mp4" type="video/mp4">
-                        Tu navegador no soporta el elemento de video.
-                    </video>
+            <div class="estado-content active" id="content-influenza">
+                <div class="enfermedad-layout">
+                    <!-- Video Section (Left) -->
+                    <div class="video-container">
+                        <video autoplay loop muted playsinline>
+                            <source src="~/Renders/influenza.mp4" type="video/mp4">
+                            Tu navegador no soporta el elemento de video.
+                        </video>
+                    </div>
+
+                    <!-- Info Section (Right) -->
+                    <div class="info-container">
+                        <h2>Influenza</h2>
+                        
+                        <div class="info-card">
+                            <p>
+                                Es una enfermedad infecciosa aguda del tracto respiratorio causada por el virus Influenza
+                                (principalmente tipos A y B). Es altamente contagiosa y se distingue por tener un inicio súbito y
+                                síntomas más intensos que el resfriado común.
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Info Section (Right) -->
+                <!-- Detailed Sections (Outside layout) -->
                 <div class="info-container">
-                    <h2>Influenza</h2>
-                    
                     <div class="info-card">
+                        <h3>Síntomas</h3>
                         <p>
-                            Es una enfermedad infecciosa aguda del tracto respiratorio causada por el virus Influenza
-                            (principalmente tipos A y B). Es altamente contagiosa y se distingue por tener un inicio súbito y
-                            síntomas más intensos que el resfriado común.
+                            Inicio súbito y fuerte: Fiebre alta, dolor de cabeza (cefalea), dolores musculares y articulares
+                            (mialgias y artralgias), escalofríos intensos, agotamiento extremo (fatiga), y tos seca. El
+                            malestar general es profundo. Los síntomas nasales (escurrimiento) suelen ser menos
+                            prominentes al inicio que en un resfriado.
                         </p>
+                    </div>
+                </div>
+
+                <div class="info-container">
+                    <div class="info-card">
+                        <h3>Condiciones Normales de Presentación</h3>
+                        <p>
+                            La influenza es estacional en México, con una mayor circulación del virus entre noviembre y
+                            marzo (la temporada invernal). Se asocia a ambientes cerrados y concurridos (escuelas,
+                            guarderías), donde la transmisión por gotas respiratorias es eficiente. La falta de vacunación es
+                            el principal factor de riesgo.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="info-container">
+                    <div class="info-card">
+                        <h3>Prevención</h3>
+                        <ol>
+                            <li>Vacunación anual contra la Influenza (medida más efectiva).</li>
+                            <li>Lavado frecuente y correcto de manos.</li>
+                            <li>Cubrirse la boca y nariz con el ángulo interno del codo al toser o estornudar.</li>
+                            <li>Evitar el contacto cercano con personas enfermas.</li>
+                        </ol>
                     </div>
                 </div>
             </div>
 
-            <!-- Detailed Sections (Outside layout) -->
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Síntomas</h3>
-                    <p>
-                        Inicio súbito y fuerte: Fiebre alta, dolor de cabeza (cefalea), dolores musculares y articulares
-                        (mialgias y artralgias), escalofríos intensos, agotamiento extremo (fatiga), y tos seca. El
-                        malestar general es profundo. Los síntomas nasales (escurrimiento) suelen ser menos
-                        prominentes al inicio que en un resfriado.
-                    </p>
-                </div>
-            </div>
+            <!-- Resfriado Comun Content -->
+            <div class="estado-content" id="content-resfriado">
+                <div class="enfermedad-layout">
+                    <!-- Video Section (Left) -->
+                    <div class="video-container">
+                        <video autoplay loop muted playsinline>
+                            <source src="~/Renders/Rinofaringitis.mp4" type="video/mp4">
+                            Tu navegador no soporta el elemento de video.
+                        </video>
+                    </div>
 
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Condiciones Normales de Presentación</h3>
-                    <p>
-                        La influenza es estacional en México, con una mayor circulación del virus entre noviembre y
-                        marzo (la temporada invernal). Se asocia a ambientes cerrados y concurridos (escuelas,
-                        guarderías), donde la transmisión por gotas respiratorias es eficiente. La falta de vacunación es
-                        el principal factor de riesgo.
-                    </p>
-                </div>
-            </div>
-
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Prevención</h3>
-                    <ol>
-                        <li>Vacunación anual contra la Influenza (medida más efectiva).</li>
-                        <li>Lavado frecuente y correcto de manos.</li>
-                        <li>Cubrirse la boca y nariz con el ángulo interno del codo al toser o estornudar.</li>
-                        <li>Evitar el contacto cercano con personas enfermas.</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-
-        <!-- Resfriado Comun Content -->
-        <div class="estado-content" id="content-resfriado">
-            <div class="enfermedad-layout">
-                <!-- Video Section (Left) -->
-                <div class="video-container">
-                    <video autoplay loop muted playsinline>
-                        <source src="~/Renders/Rinofaringitis.mp4" type="video/mp4">
-                        Tu navegador no soporta el elemento de video.
-                    </video>
+                    <!-- Info Section (Right) -->
+                    <div class="info-container">
+                        <h2>Resfriado Común (Rinofaringitis)</h2>
+                        
+                        <div class="info-card">
+                            <p>
+                                Es la infección viral más frecuente en el ser humano, afectando el revestimiento interior de
+                                la nariz y garganta. Es causada por cientos de virus, siendo el Rhinovirus el más común,
+                                seguido por Coronavirus y otros.
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Info Section (Right) -->
+                <!-- Detailed Sections (Outside layout) -->
                 <div class="info-container">
-                    <h2>Resfriado Común (Rinofaringitis)</h2>
-                    
                     <div class="info-card">
+                        <h3>Síntomas</h3>
                         <p>
-                            Es la infección viral más frecuente en el ser humano, afectando el revestimiento interior de
-                            la nariz y garganta. Es causada por cientos de virus, siendo el Rhinovirus el más común,
-                            seguido por Coronavirus y otros.
+                            Síntomas leves y progresivos: Estornudos, secreción nasal (primero acuosa y luego espesa),
+                            congestión nasal, tos leve, dolor de garganta y, en ocasiones, febrícula (temperatura
+                            ligeramente elevada). El malestar general es mucho menor que en la Influenza.
                         </p>
+                    </div>
+                </div>
+
+                <div class="info-container">
+                    <div class="info-card">
+                        <h3>Condiciones Normales de Presentación</h3>
+                        <p>
+                            Es la infección más común del invierno y se presenta bajo condiciones de cambios bruscos
+                            de temperatura, frío ambiental (lo que facilita la replicación viral en la mucosa nasal) y el
+                            contacto directo con personas infectadas.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="info-container">
+                    <div class="info-card">
+                        <h3>Prevención</h3>
+                        <ol>
+                            <li>Lavado de manos riguroso.</li>
+                            <li>Evitar tocarse la cara, especialmente ojos y nariz.</li>
+                            <li>Limpieza y desinfección de juguetes y superficies que el niño toque frecuentemente.</li>
+                            <li>Evitar cambios bruscos de temperatura.</li>
+                        </ol>
                     </div>
                 </div>
             </div>
 
-            <!-- Detailed Sections (Outside layout) -->
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Síntomas</h3>
-                    <p>
-                        Síntomas leves y progresivos: Estornudos, secreción nasal (primero acuosa y luego espesa),
-                        congestión nasal, tos leve, dolor de garganta y, en ocasiones, febrícula (temperatura
-                        ligeramente elevada). El malestar general es mucho menor que en la Influenza.
-                    </p>
-                </div>
-            </div>
+            <!-- Neumonía Content -->
+            <div class="estado-content" id="content-neumonia">
+                <div class="enfermedad-layout">
+                    <!-- Video Section (Left) -->
+                    <div class="video-container">
+                        <video autoplay loop muted playsinline>
+                            <source src="~/Renders/neumonia.mp4" type="video/mp4">
+                            Tu navegador no soporta el elemento de video.
+                        </video>
+                    </div>
 
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Condiciones Normales de Presentación</h3>
-                    <p>
-                        Es la infección más común del invierno y se presenta bajo condiciones de cambios bruscos
-                        de temperatura, frío ambiental (lo que facilita la replicación viral en la mucosa nasal) y el
-                        contacto directo con personas infectadas.
-                    </p>
-                </div>
-            </div>
-
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Prevención</h3>
-                    <ol>
-                        <li>Lavado de manos riguroso.</li>
-                        <li>Evitar tocarse la cara, especialmente ojos y nariz.</li>
-                        <li>Limpieza y desinfección de juguetes y superficies que el niño toque frecuentemente.</li>
-                        <li>Evitar cambios bruscos de temperatura.</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-
-        <!-- Neumonía Content -->
-        <div class="estado-content" id="content-neumonia">
-            <div class="enfermedad-layout">
-                <!-- Video Section (Left) -->
-                <div class="video-container">
-                    <video autoplay loop muted playsinline>
-                        <source src="~/Renders/neumonia.mp4" type="video/mp4">
-                        Tu navegador no soporta el elemento de video.
-                    </video>
+                    <!-- Info Section (Right)-->
+                    <div class="info-container">
+                        <h2>Neumonía</h2>
+                        
+                        <div class="info-card">
+                            <p>
+                            Es una infección grave que afecta el parénquima pulmonar (las estructuras donde ocurre
+                            el intercambio de oxígeno), causando inflamación y llenado de los alvéolos con líquido o
+                            pus. Puede ser causada por virus (VSR, Influenza) o, más comúnmente, por bacterias.
+                            </p>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Info Section (Right)-->
+                <!-- Detailed Sections (Outside layout) -->
                 <div class="info-container">
-                    <h2>Neumonía</h2>
-                    
                     <div class="info-card">
+                        <h3>Síntomas</h3>
                         <p>
-                           Es una infección grave que afecta el parénquima pulmonar (las estructuras donde ocurre
-                           el intercambio de oxígeno), causando inflamación y llenado de los alvéolos con líquido o
-                           pus. Puede ser causada por virus (VSR, Influenza) o, más comúnmente, por bacterias.
+                            Fiebre alta y persistente, tos con flemas (productiva), dolor en el pecho, y dificultad
+                            respiratoria (respiración rápida o disnea) con retracciones o tiraje. El niño puede tener un
+                            aspecto muy enfermo y letárgico.
                         </p>
                     </div>
                 </div>
-            </div>
 
-            <!-- Detailed Sections (Outside layout) -->
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Síntomas</h3>
-                    <p>
-                        Fiebre alta y persistente, tos con flemas (productiva), dolor en el pecho, y dificultad
-                        respiratoria (respiración rápida o disnea) con retracciones o tiraje. El niño puede tener un
-                        aspecto muy enfermo y letárgico.
-                    </p>
-                </div>
-            </div>
-
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Condiciones Normales de Presentación</h3>
-                    <p>
-                       Se presenta como una complicación de una IRA viral previa o por exposición a agentes
-                       bacterianos, en condiciones de desnutrición, bajos esquemas de vacunación
-                       (neumococo, Haemophilus influenzae tipo b), o exposición a contaminantes
-                       ambientales (humo de leña).
-                    </p>
-                </div>
-            </div>
-
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Prevención</h3>
-                    <ol>
-                        <li> Esquema de vacunación completo.</li>
-                        <li> Evitar el frío extremo y el humo de tabaco. </li>
-                        <li>Tratamiento oportuno y adecuado de las infecciones respiratorias.</li>
-                        <li>Nutrición adecuada</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-
-        <div class="estado-content" id="content-bronquitis">
-            <div class="enfermedad-layout">
-                <!-- Video Section (Left) -->
-                <div class="video-container">
-                    <video autoplay loop muted playsinline>
-                        <source src="~/Renders/neumonia.mp4" type="video/mp4">
-                        Tu navegador no soporta el elemento de video.
-                    </video>
-                </div>
-
-                <!-- Info Section (Right)-->
                 <div class="info-container">
-                    <h2>Bronquitis</h2>
-                    
                     <div class="info-card">
+                        <h3>Condiciones Normales de Presentación</h3>
                         <p>
-                           La bronquitis es una inflamación del revestimiento de los bronquios. Estos conductos transportan 
-                           el aire hacia y desde los pulmones. Las personas que tienen bronquitis suelen expectorar una mucosidad 
-                           espesa, que puede ser incolora. La bronquitis puede empezar de repente y ser de corta duración (aguda)
-                            o empezar gradualmente y ser de larga duración (crónica).
+                        Se presenta como una complicación de una IRA viral previa o por exposición a agentes
+                        bacterianos, en condiciones de desnutrición, bajos esquemas de vacunación
+                        (neumococo, Haemophilus influenzae tipo b), o exposición a contaminantes
+                        ambientales (humo de leña).
                         </p>
                     </div>
                 </div>
-            </div>
 
-            <!-- Detailed Sections (Outside layout) -->
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Síntomas</h3>
-                    <p>
-                        Tos, Producción de mucosidad (esputo), Dolor de garganta,Dolor de cabeza leve y dolores en el cuerpo,
-			            Fiebre ligera y escalofríos, Fatiga, Molestia en el pecho, Falta de aire y sibilancias.
-
-                    </p>
-                </div>
-            </div>
-
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Condiciones Normales de Presentación</h3>
-                    <p>
-                       Por lo general, la bronquitis aguda es causada por virus, generalmente los mismos virus que causan los 
-                        resfríos y la gripe (influenza). Muchos virus diferentes (todos muy contagiosos) pueden causar 
-                        bronquitis aguda. Los antibióticos no matan los virus, por lo que este tipo de medicamentos no resulta 
-                        útil en la mayoría de los casos de bronquitis.
-                        Los virus se propagan principalmente de persona a persona por las gotitas generadas cuando una persona 
-                        enferma tose, estornuda o habla y tú las inhalas. Los virus también pueden propagarse a través del 
-                        contacto con un objeto infectado. Esto sucede si tocas algo que tiene los virus y luego te tocas los 
-                        ojos, la nariz o la boca.
-
-                    </p>
-                </div>
-            </div>
-
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Prevención</h3>
-                    <ol>
-                        <li> Vacúnate todos los años contra la gripe.</li>
-                        <li> Lávate las manos. </li>
-                        <li> Evita el humo del cigarrillo.</li>
-                        <li> Ponte una mascarilla adecuada.</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-
-        <div class="estado-content" id="content-faringitis">
-            <div class="enfermedad-layout">
-                <!-- Video Section (Left) -->
-                <div class="video-container">
-                    <video autoplay loop muted playsinline>
-                        <source src="~/Renders/neumonia.mp4" type="video/mp4">
-                        Tu navegador no soporta el elemento de video.
-                    </video>
-                </div>
-
-                <!-- Info Section (Right)-->
                 <div class="info-container">
-                    <h2>Faringitis</h2>
-                    
                     <div class="info-card">
-                        <p>
-                           La faringitis es una afección que cursa con irritación, inflamación o infección de la faringe, y muy 
-			particularmente de su tejido linfoide. La faringitis aguda es una infección producida por virus o bacterias. 
-			En muchos de estos cuadros aparece un agrandamiento doloroso de los ganglios del cuello (linfadenitis reactiva), 
-			ya que en ellos también existe tejido linfoide.
-
-                        </p>
+                        <h3>Prevención</h3>
+                        <ol>
+                            <li> Esquema de vacunación completo.</li>
+                            <li> Evitar el frío extremo y el humo de tabaco. </li>
+                            <li>Tratamiento oportuno y adecuado de las infecciones respiratorias.</li>
+                            <li>Nutrición adecuada</li>
+                        </ol>
                     </div>
                 </div>
             </div>
-
-            <!-- Detailed Sections (Outside layout) -->
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Síntomas</h3>
-                    <p>
-                        Los lactantes (3 meses a 1 año) pueden estar irritables, presentar trastornos del sueño y de la alimentación, con 
-			fiebre irregular, mucosidad nasal transparente o espesa, obstrucción nasal y ronquido y excoriaciones en 
-			las fosas nasales.
-                    </p>
-                </div>
-            </div>
-
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Condiciones Normales de Presentación</h3>
-                    <p>
-                       Las infecciones faríngeas causadas por virus, además pueden predisponer a una sobreinfección bacteriana.
-			Los virus que con más frecuencia producen estos cuadros son los causantes del resfriado común y de la 
-			gripe (Rhinovirus, Coronavirus, Adenovirus, Influenzavirus); algunos virus causan cuadros bastante típicos 
-			como son la mononucleosis infecciosa (Virus de Epstein-Barr o citomegalovirus) o la herpangina y enfermedad 
-			mano-pie-boca (virus Coxsackie A), o la gingivoestomatitis herpética (virus del herpes). Entre las bacterias, 
-			las de la familia Streptococcus son las más frecuentes.
-
-                    </p>
-                </div>
-            </div>
-
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Prevención</h3>
-                    <p>
-			Las infecciones virales, como los resfriados y la gripe, suelen causar faringitis. Puede reducir el riesgo de 
-			tener dolor de garganta protegiéndote contra estas infecciones comunes. Puede: Mantenerse al día con sus 
-			vacunas contra la gripe y la COVID-19
-		    </p>
-                </div>
-            </div>
         </div>
-
-        <div class="estado-content" id="content-gripe">
-            <div class="enfermedad-layout">
-                <!-- Video Section (Left) -->
-                <div class="video-container">
-                    <video autoplay loop muted playsinline>
-                        <source src="~/Renders/neumonia.mp4" type="video/mp4">
-                        Tu navegador no soporta el elemento de video.
-                    </video>
-                </div>
-
-                <!-- Info Section (Right)-->
-                <div class="info-container">
-                    <h2>Gripe</h2>
-                    
-                    <div class="info-card">
-                        <p>
-                           La gripe (influenza) es una infección viral respiratoria que causa fiebre, escalofríos, secreción nasal, dolor 
-			   del cuerpo y tos. Se propaga fácilmente de persona a persona. La gripe puede causar síntomas de moderados a 
-			   graves. La mayoría de las personas se recuperan. Los niños, adultos mayores y las personas con ciertas afecciones 
-			   de salud están en riesgo de enfermedad grave e incluso la muerte
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Detailed Sections (Outside layout) -->
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Síntomas</h3>
-                    <p>
-                        Los síntomas de gripe a menudo comienzan de manera rápida. Usted puede empezar a sentirse enfermo aproximadamente de 
-			1 a 7 días después de estar en contacto con el virus. La mayoría de las veces, los síntomas aparecen en 2 a 3 días. 
-			A menudo el primer síntoma es una fiebre entre 100ºF (37.8°C) y 104ºF (40ºC) que aparece repentinamente. Un adulto 
-			con frecuencia tiene una fiebre más baja que un niño. Pero no todas las personas con la gripe presentan fiebre.
-                    </p>
-                </div>
-            </div>
-
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Condiciones Normales de Presentación</h3>
-                    <p>
-                       La gripe es causada por un virus de la influenza. La mayoría de las personas contraen la gripe cuando inhalan gotitas 
-			en el aire provenientes de la tos o los estornudos de alguien que tenga gripe. Usted también la puede contraer si 
- 			toca algo que contenga el virus y luego se toca la boca, la nariz o los ojos.
-
-                    </p>
-                </div>
-            </div>
-
-            <div class="info-container">
-                <div class="info-card">
-                    <h3>Prevención</h3>
-                    <p>
-			Usted puede tomar medidas para evitar contagiarse o propagar la gripe. El mejor paso para todas las personas mayores 
-			de 6 meses es recibir una vacuna contra la gripe. Existen dos tipos:
-			<ol>
-			<li>Vacuna contra la influenza (gripe) (virus vivos, intranasal): Esta vacuna es un aerosol nasal. Las personas entre 
-			los 2 y 49 años que no estén en embarazo pueden recibir una vacuna LAIV.</li>
-			<li>Vacuna contra la influenza (gripe) (virus inactivados o recombinante): Esta vacuna se administra por inyección. 
-			Todas las personas mayores de 6 meses pueden recibir esta vacuna.</li>
-			</ol>
-		    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+    }
 </div>
 
-@section Scripts {
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const dropdownBtn = document.getElementById('dropdown-btn');
-            const dropdownMenu = document.getElementById('dropdown-menu');
-            const selectedEnfermedad = document.getElementById('selected-enfermedad');
-            const dropdownItems = document.querySelectorAll('.dropdown-item');
-            const contentSections = document.querySelectorAll('.estado-content');
-
-            // Toggle dropdown
-            dropdownBtn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                dropdownMenu.classList.toggle('show');
-            });
-
-            // Close dropdown when clicking outside
-            document.addEventListener('click', function(event) {
-                if (!event.target.closest('.custom-dropdown')) {
-                    dropdownMenu.classList.remove('show');
-                }
-            });
-
-            // Handle item selection
-            dropdownItems.forEach(item => {
-                item.addEventListener('click', function() {
-                    const enfermedad = this.getAttribute('data-enfermedad');
-                    const enfermedadText = this.textContent;
-
-                    // Update selected text
-                    selectedEnfermedad.textContent = enfermedadText;
-
-                    // Hide all content sections
-                    contentSections.forEach(content => {
-                        content.classList.remove('active');
-                    });
-
-                    // Show selected content
-                    const selectedContent = document.getElementById('content-' + enfermedad);
-                    if (selectedContent) {
-                        selectedContent.classList.add('active');
-                    }
-
-                    // Close dropdown
-                    dropdownMenu.classList.remove('show');
-                });
-            });
-        });
-    </script>
+@section Scripts{
+<script src="~/js/dropdown.js" asp-append-version="true"></script>
 }
